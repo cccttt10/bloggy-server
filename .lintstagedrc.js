@@ -1,3 +1,11 @@
 module.exports = {
-    './**/*.js': ['prettier --config ./.prettierrc.json --check', 'eslint'],
+    './src/**/*.js': [
+        'prettier --config ./.prettierrc.json --check', 
+        'eslint'
+    ],
+    './src/**/*.ts': [
+        'prettier --config ./.prettierrc.json --check', 
+        'eslint',
+        'tsc --noEmit --listFiles'
+    ]
 };

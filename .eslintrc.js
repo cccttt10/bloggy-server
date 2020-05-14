@@ -17,7 +17,10 @@ module.exports = {
         'no-console': 'warn',
         'no-var': 'error',
         'no-trailing-spaces': 'error',
-        'no-unused-vars': 'error',
+        'no-unused-vars': [
+            'error',
+            { 'argsIgnorePattern': '^(req|res|next)$' }
+        ],
         'require-await': 'error',
         "require-sort/require-sort": "error"
     }

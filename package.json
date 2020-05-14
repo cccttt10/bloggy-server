@@ -18,18 +18,23 @@
         "node-fetch": "^2.3.0",
         "yargs": "^12.0.2"
     },
+    "description": "server code for our blog project",
     "devDependencies": {
         "eslint": "^6.8.0",
-        "eslint-plugin-sort-requires": "^2.1.0",
+        "eslint-plugin-require-sort": "^1.2.1",
         "husky": "^4.2.3",
         "lint-staged": "9.4.3",
         "prettier": "^2.0.4"
     },
-    "description": "server code for our blog project",
     "license": "ISC",
     "name": "blog-server",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "check": "npm run prettier-check && npm run eslint-check",
+        "eslint-check": "eslint . --ext .js",
+        "eslint-fix": "eslint . --ext .js --fix",
+        "fix": "npm run prettier-fix && npm run eslint-fix",
+        "prettier-check": "prettier --config ./.prettierrc.json --check \"./**/*.js\"",
+        "prettier-fix": "prettier --config ./.prettierrc.json --write \"./**/*.js\""
     },
     "version": "1.0.0"
 }

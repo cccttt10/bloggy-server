@@ -1,6 +1,3 @@
 module.exports = {
-    './**/*.js': [
-        'prettier --config ./.prettierrc.json --write',
-        'eslint --fix'
-    ]
+    './**/*.js': ['prettier --config ./.prettierrc.json --check', 'eslint'],
 };

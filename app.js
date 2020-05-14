@@ -1,5 +1,11 @@
+/*
+babel is needed in order to support import syntax
+*/
 require('babel-register');
 
+/*
+dependencies
+*/
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const express = require('express');

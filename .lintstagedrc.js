@@ -6,6 +6,5 @@ module.exports = {
     './src/**/*.ts': [
         'prettier --config ./.prettierrc.json --check', 
         'eslint',
-        // 'npm run tsc-check'
     ]
 };

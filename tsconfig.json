@@ -13,13 +13,9 @@
                 "src/types/*"
             ]
         },
-        "skipLibCheck": true,
         "sourceMap": true,
         "target": "es6"
     },
-    "exclude": [
-        "node_modules"
-    ],
     "include": [
         "src/**/*"
     ]

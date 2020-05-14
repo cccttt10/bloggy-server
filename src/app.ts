@@ -81,4 +81,4 @@ app.use(function (
     res.render('error');
 });
 
-module.exports = app;
+export default app;

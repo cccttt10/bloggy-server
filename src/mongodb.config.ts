@@ -1,9 +1,9 @@
+import consola from 'consola';
 import { ExpressError } from 'global';
+import mongoose, { Mongoose } from 'mongoose';
+import autoIncrement from 'mongoose-auto-increment';
 
-const CONFIG = require('./app.config.js/index.js');
-const autoIncrement = require('mongoose-auto-increment');
-const consola = require('consola');
-const mongoose = require('mongoose');
+import * as CONFIG from './app.config.js';
 
 /*
 remove deprecation warnings
@@ -18,9 +18,9 @@ mongoose.Promise = global.Promise;
 /*
 export mongoose instance
 */
-exports.mongoose = mongoose;
+export { mongoose };
 
-exports.connect = (): void => {
+export const connect = (): Mongoose => {
     // connect to db
     mongoose.connect(CONFIG.MONGODB.uri, {
         useCreateIndex: true,

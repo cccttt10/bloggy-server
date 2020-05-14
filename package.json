@@ -1,10 +1,9 @@
 {
     "author": "Chuntong Gao, Bolin Wang, Yang Song, Hongkaiyue Zhou",
     "dependencies": {
-        "argv": "0.0.2",
         "babel-preset-env": "^1.7.0",
         "babel-register": "^6.26.0",
-        "consola": "^1.4.4",
+        "consola": "^2.12.1",
         "cookie-parser": "~1.4.3",
         "crypto": "^1.0.1",
         "debug": "~2.6.9",
@@ -21,8 +20,7 @@
     },
     "description": "server code for our blog project",
     "devDependencies": {
-        "@types/argv": "0.0.4",
-        "@types/consola": "^1.0.0",
+        "@types/consola": "^2.2.5",
         "@types/cookie-parser": "^1.4.2",
         "@types/debug": "^4.1.5",
         "@types/ejs": "^2.0.0",

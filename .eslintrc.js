@@ -10,15 +10,15 @@ module.exports = {
         'ecmaVersion': 9,
         'sourceType': 'module'
     },
-    'plugins': ['require-sort'],
+    'plugins': ['require-sort', 'simple-import-sort'],
     'rules': {
         '@typescript-eslint/explicit-function-return-type': 'warn',
         '@typescript-eslint/no-explicit-any': 'error',
-        '@typescript-eslint/no-use-before-define': 'warn',
-        '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-unused-vars': ['error', {
             'argsIgnorePattern': '^(req|res|next)$'
         }],
+        '@typescript-eslint/no-use-before-define': 'warn',
+        '@typescript-eslint/no-var-requires': 'off',
         'camelcase': 'error',
         'eqeqeq': 'error',
         'max-lines': ['warn', 200],
@@ -29,6 +29,7 @@ module.exports = {
         }],
         'no-var': 'error',
         'require-await': 'error',
-        "require-sort/require-sort": "error"
+        "require-sort/require-sort": "error",
+        'simple-import-sort/sort': 'error'
     }
 };

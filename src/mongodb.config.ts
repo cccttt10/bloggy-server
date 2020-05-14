@@ -1,3 +1,5 @@
+import { ExpressError } from 'global';
+
 const CONFIG = require('./app.config.js/index.js');
 const autoIncrement = require('mongoose-auto-increment');
 const consola = require('consola');
@@ -18,7 +20,7 @@ export mongoose instance
 */
 exports.mongoose = mongoose;
 
-exports.connect = () => {
+exports.connect = (): void => {
     // connect to db
     mongoose.connect(CONFIG.MONGODB.uri, {
         useCreateIndex: true,
@@ -27,7 +29,7 @@ exports.connect = () => {
     });
 
     // connection failed
-    mongoose.connection.on('error', error => {
+    mongoose.connection.on('error', (error: ExpressError) => {
         consola.warn('db connection failed!', error);
     });
 

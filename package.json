@@ -38,6 +38,7 @@
         "@typescript-eslint/parser": "^2.33.0",
         "eslint": "^6.8.0",
         "eslint-plugin-require-sort": "^1.2.1",
+        "eslint-plugin-simple-import-sort": "^5.0.3",
         "husky": "^4.2.3",
         "lint-staged": "9.4.3",
         "prettier": "^2.0.4",
@@ -46,8 +47,8 @@
     "license": "ISC",
     "name": "blog-server",
     "scripts": {
-        "build": "npm run check && npm run tsc-build",
-        "check": "npm run prettier-check && npm run eslint-check && tsc-check",
+        "build": "rm -rf build/ && npm run check && npm run tsc-build",
+        "check": "npm run prettier-check && npm run eslint-check && npm run tsc-check",
         "eslint-check": "eslint src/** --ext .js --ext .ts",
         "eslint-fix": "eslint src/** --ext .js --ext .ts --fix",
         "fix": "npm run prettier-fix && npm run eslint-fix",

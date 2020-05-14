@@ -6,12 +6,14 @@ require('babel-register');
 /*
 dependencies
 */
-const cookieParser = require('cookie-parser');
-const createError = require('http-errors');
-const express = require('express');
-const logger = require('morgan');
-const path = require('path');
-const session = require('express-session');
+import cookieParser from 'cookie-parser';
+import { NextFunction, Request, Response } from 'express';
+import express from 'express';
+import session from 'express-session';
+import { ExpressError } from 'global';
+import createError from 'http-errors';
+import logger from 'morgan';
+import path from 'path';
 
 const app = express();
 
@@ -56,14 +58,19 @@ TODO: configure routes
 /*
 catch 404 and forward to error handler
 */
-app.use(function (req, res, next) {
+app.use(function (req: Request, res: Response, next: NextFunction) {
     next(createError(404));
 });
 
 /*
 error handler
 */
-app.use(function (err, req, res, next) {
+app.use(function (
+    err: ExpressError,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     // set locals
     // provide error only in development
     res.locals.message = err.message;

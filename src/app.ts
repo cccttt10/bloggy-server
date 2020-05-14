@@ -48,8 +48,10 @@ app.use(
 );
 
 /*
-TODO: connect to db
+connect to db
 */
+const mongodb = require('./core/mongodb');
+mongodb.connect();
 
 /*
 TODO: configure routes

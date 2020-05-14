@@ -15,6 +15,7 @@ module.exports = {
         'eqeqeq': 'error',
         'max-lines': ['warn', 200],
         'no-console': 'warn',
+        'no-var': 'error',
         'no-trailing-spaces': 'error',
         'no-unused-vars': 'error',
         'require-await': 'error',

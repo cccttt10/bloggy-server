@@ -1,4 +1,4 @@
-const CONFIG = require('../app.config.js');
+const CONFIG = require('./app.config.js/index.js');
 const autoIncrement = require('mongoose-auto-increment');
 const consola = require('consola');
 const mongoose = require('mongoose');

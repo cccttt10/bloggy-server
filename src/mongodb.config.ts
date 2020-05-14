@@ -15,12 +15,7 @@ set up promise
 */
 mongoose.Promise = global.Promise;
 
-/*
-export mongoose instance
-*/
-export { mongoose };
-
-export const connect = (): Mongoose => {
+const connect = (): Mongoose => {
     // connect to db
     mongoose.connect(CONFIG.MONGODB.uri, {
         useCreateIndex: true,
@@ -30,7 +25,7 @@ export const connect = (): Mongoose => {
 
     // connection failed
     mongoose.connection.on('error', (error: ExpressError) => {
-        consola.warn('db connection failed!', error);
+        consola.error('db connection failed!', error);
     });
 
     // connection successful
@@ -43,4 +38,9 @@ export const connect = (): Mongoose => {
 
     // return mongoose instance
     return mongoose;
+};
+
+export default {
+    instance: mongoose,
+    connect: connect,
 };

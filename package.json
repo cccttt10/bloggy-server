@@ -7,7 +7,7 @@
         "cookie-parser": "~1.4.3",
         "crypto": "^1.0.1",
         "debug": "~2.6.9",
-        "dotenv": "^8.2.0",
+        "dotenv": "^8.0.0",
         "ejs": "~2.5.7",
         "express": "~4.16.0",
         "express-session": "^1.15.6",
@@ -52,7 +52,7 @@
         "fix": "npm run prettier-fix && npm run eslint-fix",
         "prettier-check": "prettier --config ./.prettierrc.json --check \"./src/**/*.{js,ts}\"",
         "prettier-fix": "prettier --config ./.prettierrc.json --write \"./src/**/*.{js,ts}\"",
-        "start-dev": "node src/index.js",
+        "start-dev": "node build/index.js --no-deprecation --no-warning",
         "tsc-build": "tsc --listEmittedFiles",
         "tsc-check": "tsc --noEmit --listEmittedFiles"
     },

@@ -1,7 +1,5 @@
 const MONGODB = {
-    uri: `mongodb://127.0.0.1:${process.env.dbPort || '27017'}/blogNode`,
-    username: process.env.dbUsername || 'DB_username',
-    password: process.env.dbPassword || 'DB_password',
+    uri: `mongodb+srv://chuntonggao:${process.env.DB_PASSWORD}@cluster0-i4fbo.mongodb.net/test?retryWrites=true&w=majority`,
 };
 
 const GITHUB = {

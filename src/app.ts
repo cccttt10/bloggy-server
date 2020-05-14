@@ -50,8 +50,8 @@ app.use(
 /*
 connect to db
 */
-const mongodb = require('./core/mongodb');
-mongodb.connect();
+import db from './mongodb.config';
+db.connect();
 
 /*
 TODO: configure routes

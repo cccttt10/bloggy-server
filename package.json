@@ -1,0 +1,10 @@
+{
+  "name": "blog-server",
+  "version": "1.0.0",
+  "description": "server code for our blog project",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chuntong Gao, Bolin Wang, Yang Song, Hongkaiyue Zhou",
+  "license": "ISC"
+}

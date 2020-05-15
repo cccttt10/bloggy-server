@@ -1,0 +1,11 @@
+POST {{host}}/register HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Chuntong Gao",
+    "password": "chuntonggao",
+    "phone": "7788349708",
+    "email": "heihegao@gmail.com",
+    "bio": "Chuntong Gao is very handsome",
+    "type": 0
+}

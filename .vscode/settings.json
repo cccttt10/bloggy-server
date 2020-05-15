@@ -5,6 +5,15 @@
         "typescript",
         "typescriptreact"
     ],
+    "rest-client.environmentVariables": {
+        "$shared": {},
+        "local": {
+            "host": "http://localhost:3300"
+        },
+        "production": {
+            "host": ""
+        }
+    },
     "todohighlight.include": [
         "**/*.js",
         "**/*.jsx",

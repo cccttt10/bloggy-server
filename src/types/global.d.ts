@@ -26,4 +26,5 @@ declare module 'global' {
     export type ProjectState = 1 | 2 | 3; // 1: finished, 2: in progress, 3: aborted
     export type LinkType = 1 | 2; // 1: external, 2: internal\
     export type LinkVisibility = 1 | 2; // 1: private, 2: public
+    export type MessageState = 0 | 1; // 0: not reviewed, 1: reviewed
 }

@@ -6,6 +6,7 @@ require('babel-register');
 /*
 dependencies
 */
+import consola from 'consola';
 import cookieParser from 'cookie-parser';
 import { Express, NextFunction, Request, Response } from 'express';
 import express from 'express';
@@ -18,8 +19,10 @@ import path from 'path';
 const app: Express = express();
 
 /*
-TODO: configure view engine
+configure view engine
 */
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 /*
 use logger
@@ -56,8 +59,8 @@ db.connect();
 /*
 configure routes
 */
-const route = require('./routes/index');
-route(app);
+import setUpRoutes from './routes/index';
+setUpRoutes(app);
 
 /*
 catch 404 and forward to error handler
@@ -75,6 +78,9 @@ app.use(function (
     res: Response,
     next: NextFunction
 ) {
+    consola.error('error caught in app.ts');
+    consola.log(err);
+
     // set locals
     // provide error only in development
     res.locals.message = err.message;

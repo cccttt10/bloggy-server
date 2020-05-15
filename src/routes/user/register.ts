@@ -1,11 +1,12 @@
 import consola from 'consola';
 import { Request, Response } from 'express';
 
-import { User } from '../../models/user';
+import { User, UserDocument } from '../../models/user';
 import { md5, MD5_SUFFIX, respondToClient } from '../../util/util';
 
 export default (req: Request, res: Response): void => {
-    const { name, password, phone, email, bio, type } = req.body;
+    const { name, password, phone, email, bio } = req.body;
+
     if (!email) {
         respondToClient(res, 400, 2, 'Email cannot be empty.');
         return;
@@ -33,7 +34,7 @@ export default (req: Request, res: Response): void => {
     User.findOne({ email: email })
         .then(data => {
             if (data) {
-                respondToClient(res, 200, 1, 'User already exists.');
+                respondToClient(res, 400, 2, 'User already exists.');
                 return;
             }
             // save user to db
@@ -42,9 +43,8 @@ export default (req: Request, res: Response): void => {
                 name,
                 password: md5(password + MD5_SUFFIX),
                 phone,
-                type,
                 bio,
-            });
+            } as UserDocument);
             newUser.save().then(data => {
                 respondToClient(res, 200, 0, 'Registration successful', data);
             });

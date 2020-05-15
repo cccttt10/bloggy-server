@@ -27,7 +27,6 @@ export type ArticleDocument = mongoose.Document & {
     likedBy: Array<{
         id: UserDocument['id'];
         name: UserDocument['name'];
-        type: UserDocument['type'];
         bio: UserDocument['bio'];
         avatar: UserDocument['avatar'];
         createdOn: UserDocument['createdOn'];
@@ -63,7 +62,6 @@ const articleSchema = new instance.Schema({
         {
             id: { type: instance.Schema.Types.ObjectId },
             name: { type: String, required: true, default: '' },
-            type: { type: Number, default: 1 }, // 0: blogger, 1: other
             bio: { type: String, default: '' },
             avatar: { type: String, default: 'user' },
             createdOn: { type: Date, default: Date.now },

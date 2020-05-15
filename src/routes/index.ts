@@ -8,7 +8,6 @@ const setUpRoutes = (app: Express): void => {
     app.get('/getUserList', user.getUserList);
     app.post('/login', user.login);
     app.post('/loginAdmin', user.loginAdmin);
-    app.post('/loginOAuth', user.loginOAuth);
     app.post('/logout', user.logout);
     app.post('/register', user.register);
 };

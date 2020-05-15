@@ -4,7 +4,6 @@ import delUser from './delUser';
 import getUserList from './getUserList';
 import login from './login';
 import loginAdmin from './loginAdmin';
-import loginOAuth from './loginOAuth';
 import logout from './logout';
 import register from './register';
 
@@ -14,7 +13,6 @@ export default {
     getUserList: tryAsync(getUserList),
     login: tryAsync(login),
     loginAdmin: tryAsync(loginAdmin),
-    loginOAuth: tryAsync(loginOAuth),
     logout: tryAsync(logout),
     register: tryAsync(register),
 };

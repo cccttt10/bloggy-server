@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 
 import { User, UserDocument } from '../../models/user';
 import { md5, MD5_SUFFIX, respondToClient } from '../../util/util';
+import { sendToken } from './token';
 
 export default (req: Request, res: Response): void => {
     const { name, password, phone, email, bio } = req.body;
@@ -44,7 +45,12 @@ export default (req: Request, res: Response): void => {
                 bio,
             } as UserDocument);
             newUser.save().then(data => {
-                respondToClient(res, 200, 0, 'Registration successful', data);
+                sendToken({
+                    user: data,
+                    statusCode: 200,
+                    res: res,
+                    message: 'Registration successful.',
+                });
             });
         })
         .catch(err => {

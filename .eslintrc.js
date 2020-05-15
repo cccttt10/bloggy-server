@@ -28,6 +28,7 @@ module.exports = {
         'no-unused-vars': ['error', {
             'argsIgnorePattern': '^(req|res|next)$'
         }],
+        'no-useless-escape': 'off',
         'no-var': 'error',
         'require-await': 'error',
         "require-sort/require-sort": "error",

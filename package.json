@@ -61,7 +61,7 @@
         "start-dev": "node build/src/index.js --no-deprecation --no-warning",
         "tsc-build": "tsc --listEmittedFiles",
         "tsc-check": "tsc --noEmit --listEmittedFiles",
-        "test": "mocha 'build/tests/**/*.spec.js'"
+        "test": "mocha 'build/tests/**/*.spec.js' --require tests/mocha.env.js"
     },
     "version": "1.0.0"
 }

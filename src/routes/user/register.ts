@@ -12,9 +12,7 @@ export default (req: Request, res: Response): void => {
         return;
     }
 
-    const reg = new RegExp(
-        '^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$'
-    );
+    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     if (!reg.test(email)) {
         respondToClient(res, 400, 2, 'Email has wrong format.');
         return;

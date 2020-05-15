@@ -1,61 +1,56 @@
-import consola from 'consola';
 import { Request, Response } from 'express';
 
 import { User, UserDocument } from '../../models/user';
-import { md5, MD5_SUFFIX, respondToClient } from '../../util/util';
+import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
 import { sendToken } from './token';
 
-export default (req: Request, res: Response): void => {
+export default async (req: Request, res: Response): Promise<void> => {
     const { name, password, phone, email, bio } = req.body;
 
     if (!email) {
-        respondToClient(res, 400, 2, 'Email cannot be empty.');
-        return;
+        throw new ServerError({
+            message: 'Email cannot be empty.',
+            statusCode: 400,
+        });
     }
 
     const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     if (!reg.test(email)) {
-        respondToClient(res, 400, 2, 'Email has wrong format.');
-        return;
+        throw new ServerError({
+            message: 'Email has invalid format.',
+            statusCode: 400,
+        });
     }
 
     if (!name) {
-        respondToClient(res, 400, 2, 'Name cannot be empty');
-        return;
+        throw new ServerError({ message: 'Name cannot be empty.', statusCode: 400 });
     }
 
     if (!password) {
-        respondToClient(res, 400, 2, 'Password cannot be empty.');
-        return;
+        throw new ServerError({
+            message: 'Password cannot be empty.',
+            statusCode: 400,
+        });
     }
 
     // check if user is already in db
-    User.findOne({ email: email })
-        .then(data => {
-            if (data) {
-                respondToClient(res, 400, 2, 'User already exists.');
-                return;
-            }
-            // save user to db
-            const newUser = new User({
-                email,
-                name,
-                password: md5(password + MD5_SUFFIX),
-                phone,
-                bio,
-            } as UserDocument);
-            newUser.save().then(data => {
-                sendToken({
-                    user: data,
-                    statusCode: 200,
-                    res: res,
-                    message: 'Registration successful.',
-                });
-            });
-        })
-        .catch(err => {
-            consola.error(err);
-            respondToClient(res);
-            return;
-        });
+    const user: UserDocument = await User.findOne({ email: email });
+    if (user) {
+        throw new ServerError({ message: 'User already exists.', statusCode: 400 });
+    }
+
+    // save new user to db
+    const newUser: UserDocument = new User({
+        email,
+        name,
+        password: md5(password + MD5_SUFFIX),
+        phone,
+        bio,
+    } as UserDocument);
+    await newUser.save();
+    sendToken({
+        user: newUser,
+        statusCode: 200,
+        res: res,
+    });
 };

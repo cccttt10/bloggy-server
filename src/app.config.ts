@@ -1,4 +1,6 @@
-// load environment variables
+/*
+load environment variables
+*/
 require('dotenv').config();
 
 const MONGODB = {

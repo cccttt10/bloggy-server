@@ -1,37 +1,38 @@
-import consola from 'consola';
 import { Request, Response } from 'express';
 
-import { User } from '../../models/user';
-import { md5, MD5_SUFFIX, respondToClient } from '../../util/util';
+import { User, UserDocument } from '../../models/user';
+import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
+import { sendToken } from './token';
 
-export default (req: Request, res: Response): void => {
+export default async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     if (!email) {
-        respondToClient(res, 400, 2, 'Email cannot be empty.');
-        return;
+        throw new ServerError({
+            message: 'Email cannot be empty.',
+            statusCode: 400,
+        });
     }
 
     if (!password) {
-        respondToClient(res, 400, 2, 'Password cannot be empty.');
-        return;
+        throw new ServerError({
+            message: 'Password cannot be empty.',
+            statusCode: 400,
+        });
     }
 
-    User.findOne({
+    const user: UserDocument = await User.findOne({
         email,
         password: md5(password + MD5_SUFFIX),
-    })
-        .then(userInfo => {
-            if (userInfo) {
-                // provision session if login successful
-                req.session.userInfo = userInfo;
-                respondToClient(res, 200, 0, 'Login successful.', userInfo);
-            } else {
-                respondToClient(res, 400, 1, 'Email or password is wrong.');
-            }
-        })
-        .catch(err => {
-            consola.error(err);
-            respondToClient(res);
-        });
+    });
+
+    if (!user) {
+        throw new ServerError({ message: 'User does not exist.', statusCode: 400 });
+    }
+
+    sendToken({
+        user: user,
+        statusCode: 200,
+        res: res,
+    });
 };

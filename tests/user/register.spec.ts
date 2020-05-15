@@ -1,20 +1,28 @@
+/*
+load environment variables
+*/
+require('dotenv').config();
+
 import { expect } from 'chai';
 import request from 'supertest';
 
-import app from '../../src/app';
-import { User, UserDocument } from '../../src/models/user';
-import db from '../../src/mongodb.config';
+import { UserDocument } from '../../src/models/user';
 
 describe('/register', () => {
-    const agent = request(app);
+    const agent = request('http://localhost:3300');
 
-    before(async () => {
-        await User.deleteMany({});
+    beforeEach(async () => {
+        const res = await agent.post('/deleteAllUsers').send({
+            sudoSecret: process.env.SUDO_SECRET,
+        });
+        expect(res.status).to.equal(202);
     });
 
-    after(async () => {
-        await User.deleteMany({});
-        db.disconnect();
+    afterEach(async () => {
+        const res = await agent
+            .post('/deleteAllUsers')
+            .send({ sudoSecret: process.env.SUDO_SECRET });
+        expect(res.status).to.equal(202);
     });
 
     it('should return 400 if name is not provided', async () => {
@@ -71,7 +79,17 @@ describe('/register', () => {
     });
 
     it('should return 400 if email is already registered', async () => {
-        const res = await agent.post('/register').send({
+        let res = await agent.post('/register').send({
+            name: 'Chuntong Gao',
+            password: 'chuntonggao',
+            phone: '7788349708',
+            email: 'heihegao@gmail.com',
+            bio: 'Chuntong Gao is very handsome',
+        } as UserDocument);
+        expect(res.header).to.have.property('set-cookie');
+        expect(res.status).to.equal(200);
+
+        res = await agent.post('/register').send({
             name: 'Kiko Xiong',
             password: '52771314',
             phone: '123',

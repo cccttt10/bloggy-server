@@ -9,21 +9,6 @@ export const md5 = (pwd: crypto.BinaryLike): string => {
     return md5.update(pwd).digest('hex');
 };
 
-export const respondToClient = (
-    res: Response,
-    httpCode = 500,
-    code = 3,
-    message = 'server side exception',
-    data = {}
-): void => {
-    const responseData = {
-        code: code,
-        message: message,
-        data: data,
-    };
-    res.status(httpCode).json(responseData);
-};
-
 // format as 2018-12-12 12:12:00
 export const timestampToTime = (timestamp: string | number | Date): string => {
     const date = new Date(timestamp);
@@ -53,21 +38,20 @@ export class ServerError extends Error {
     statusCode: number;
 }
 
-export const tryAsync = (
-    asyncFn: (req: Request, res: Response, next: NextFunction) => void
-) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AsyncFunc = (req: Request, res: Response, next: NextFunction) => Promise<any>;
+type WrappedFunc = (req: Request, res: Response, next: NextFunction) => void;
+export const tryAsync = (asyncFn: AsyncFunc): WrappedFunc => {
     return (req: Request, res: Response, next: NextFunction): void => {
-        try {
-            asyncFn(req, res, next);
-        } catch (err) {
-            if (err instanceof ServerError)
+        asyncFn(req, res, next).catch(err => {
+            if (err instanceof ServerError) {
                 res.status(err.statusCode).send({ message: err.message });
-            else {
+            } else {
                 consola.error(err);
                 res.status(500).send({
                     message: 'Your Internet connection is terrible! Please check!',
                 });
             }
-        }
+        });
     };
 };

@@ -2,7 +2,6 @@ import { Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { UserDocument } from '../../models/user';
-import { respondToClient } from '../../util/util';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 const createToken = (id: string): string => {
@@ -15,12 +14,10 @@ export const sendToken = ({
     user,
     statusCode,
     res,
-    message = 'success',
 }: {
     user: UserDocument;
     statusCode: number;
     res: Response;
-    message?: string;
 }): void => {
     const token = createToken(user._id);
 
@@ -38,5 +35,5 @@ export const sendToken = ({
     // Remove password from response
     user.password = undefined;
 
-    respondToClient(res, statusCode, 0, message, { user });
+    res.status(statusCode).json({ user: user });
 };

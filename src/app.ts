@@ -7,7 +7,7 @@ require('babel-register');
 dependencies
 */
 import cookieParser from 'cookie-parser';
-import { NextFunction, Request, Response } from 'express';
+import { Express, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import session from 'express-session';
 import { ExpressError } from 'global';
@@ -15,7 +15,7 @@ import createError from 'http-errors';
 import logger from 'morgan';
 import path from 'path';
 
-const app = express();
+const app: Express = express();
 
 /*
 TODO: configure view engine
@@ -54,8 +54,10 @@ import db from './mongodb.config';
 db.connect();
 
 /*
-TODO: configure routes
+configure routes
 */
+const route = require('./routes/index');
+route(app);
 
 /*
 catch 404 and forward to error handler

@@ -1,5 +1,6 @@
+import consola from 'consola';
 import crypto from 'crypto';
-import { Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export const MD5_SUFFIX = 'chuntonggao*&^%$#';
 
@@ -41,4 +42,32 @@ export const timestampToTime = (timestamp: string | number | Date): string => {
             : date.getMinutes() + ':';
     const s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
     return Y + M + D + h + m + s;
+};
+
+export class ServerError extends Error {
+    constructor({ message, statusCode }: { message: string; statusCode: number }) {
+        super(message);
+        this.statusCode = statusCode;
+        Error.captureStackTrace(this, this.constructor);
+    }
+    statusCode: number;
+}
+
+export const tryAsync = (
+    asyncFn: (req: Request, res: Response, next: NextFunction) => void
+) => {
+    return (req: Request, res: Response, next: NextFunction): void => {
+        try {
+            asyncFn(req, res, next);
+        } catch (err) {
+            if (err instanceof ServerError)
+                res.status(err.statusCode).send({ message: err.message });
+            else {
+                consola.error(err);
+                res.status(500).send({
+                    message: 'Your Internet connection is terrible! Please check!',
+                });
+            }
+        }
+    };
 };

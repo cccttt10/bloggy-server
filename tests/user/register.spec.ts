@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { UserDocument } from '../../src/models/user';
+import { chuntongUser } from '../test-data/users';
 
 describe('/register', () => {
     const agent = request('http://localhost:3300');
@@ -27,65 +28,53 @@ describe('/register', () => {
 
     it('should return 400 if name is not provided', async () => {
         const res = await agent.post('/register').send({
-            password: 'chuntonggao',
-            phone: '7788349708',
-            email: 'heihegao@gmail.com',
-            bio: 'Chuntong Gao is very handsome',
+            password: chuntongUser.password,
+            phone: chuntongUser.phone,
+            email: chuntongUser.email,
+            bio: chuntongUser.bio,
         } as UserDocument);
         expect(res.status).to.equal(400);
     });
 
     it('should return 400 if password is not provided', async () => {
         const res = await agent.post('/register').send({
-            name: 'Chuntong Gao',
-            phone: '7788349708',
-            email: 'heihegao@gmail.com',
-            bio: 'Chuntong Gao is very handsome',
+            name: chuntongUser.name,
+            phone: chuntongUser.phone,
+            email: chuntongUser.email,
+            bio: chuntongUser.bio,
         } as UserDocument);
         expect(res.status).to.equal(400);
     });
 
     it('should return 400 if email is not provided', async () => {
         const res = await agent.post('/register').send({
-            name: 'Chuntong Gao',
-            password: 'chuntonggao',
-            phone: '7788349708',
-            bio: 'Chuntong Gao is very handsome',
+            name: chuntongUser.name,
+            password: chuntongUser.password,
+            phone: chuntongUser.phone,
+            bio: chuntongUser.bio,
         } as UserDocument);
         expect(res.status).to.equal(400);
     });
 
     it('should return 400 if email is invalid format', async () => {
         const res = await agent.post('/register').send({
-            name: 'Chuntong Gao',
-            password: 'chuntonggao',
-            phone: '7788349708',
+            name: chuntongUser.name,
+            password: chuntongUser.password,
+            phone: chuntongUser.phone,
             email: 'heihegao@gmail',
-            bio: 'Chuntong Gao is very handsome',
+            bio: chuntongUser.bio,
         } as UserDocument);
         expect(res.status).to.equal(400);
     });
 
     it('should register a new user and give token upon registration', async () => {
-        const res = await agent.post('/register').send({
-            name: 'Chuntong Gao',
-            password: 'chuntonggao',
-            phone: '7788349708',
-            email: 'heihegao@gmail.com',
-            bio: 'Chuntong Gao is very handsome',
-        } as UserDocument);
+        const res = await agent.post('/register').send(chuntongUser as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
     });
 
     it('should return 400 if email is already registered', async () => {
-        let res = await agent.post('/register').send({
-            name: 'Chuntong Gao',
-            password: 'chuntonggao',
-            phone: '7788349708',
-            email: 'heihegao@gmail.com',
-            bio: 'Chuntong Gao is very handsome',
-        } as UserDocument);
+        let res = await agent.post('/register').send(chuntongUser as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
@@ -93,7 +82,7 @@ describe('/register', () => {
             name: 'Kiko Xiong',
             password: '52771314',
             phone: '123',
-            email: 'heihegao@gmail.com',
+            email: chuntongUser.email,
             bio: '77 is best',
         } as UserDocument);
         expect(res.status).to.equal(400);

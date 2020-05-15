@@ -27,7 +27,10 @@ export default async (req: Request, res: Response): Promise<void> => {
     });
 
     if (!user) {
-        throw new ServerError({ message: 'User does not exist.', statusCode: 400 });
+        throw new ServerError({
+            message: 'Email or password is wrong.',
+            statusCode: 400,
+        });
     }
 
     sendToken({

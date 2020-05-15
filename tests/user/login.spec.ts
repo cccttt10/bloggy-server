@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { UserDocument } from '../../src/models/user';
-import { chuntongUser } from '../test-data/users';
+import users from '../test-data/users';
 
 describe('/login', () => {
     const agent = request('http://localhost:3300');
@@ -27,60 +27,60 @@ describe('/login', () => {
     });
 
     it('should allow a registered user to login', async () => {
-        let res = await agent.post('/register').send(chuntongUser as UserDocument);
+        let res = await agent.post('/register').send(users[0] as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
-            email: chuntongUser.email,
-            password: chuntongUser.password,
+            email: users[0].email,
+            password: users[0].password,
         });
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
     });
 
     it('should return 400 if email exists but password is wrong', async () => {
-        let res = await agent.post('/register').send(chuntongUser as UserDocument);
+        let res = await agent.post('/register').send(users[0] as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
-            email: chuntongUser.email,
-            password: 'wrong',
+            email: users[0].email,
+            password: users[0].password + 'wrong',
         });
         expect(res.status).to.equal(400);
     });
 
     it('should return 400 if email does not exist', async () => {
-        let res = await agent.post('/register').send(chuntongUser as UserDocument);
+        let res = await agent.post('/register').send(users[0] as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
-            email: 'heihegao@gmail.commmmmmmmm',
-            password: chuntongUser.password,
+            email: users[0].email + 'does not exist',
+            password: users[0].password,
         });
         expect(res.status).to.equal(400);
     });
 
     it('should return 400 if email is not provided', async () => {
-        let res = await agent.post('/register').send(chuntongUser as UserDocument);
+        let res = await agent.post('/register').send(users[0] as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
-            password: chuntongUser.password,
+            password: users[0].password,
         });
         expect(res.status).to.equal(400);
     });
 
     it('should return 400 if password is not provided', async () => {
-        let res = await agent.post('/register').send(chuntongUser as UserDocument);
+        let res = await agent.post('/register').send(users[0] as UserDocument);
         expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
-            email: chuntongUser.email,
+            email: users[0].email,
         });
         expect(res.status).to.equal(400);
     });

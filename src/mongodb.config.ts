@@ -21,6 +21,7 @@ const connect = (): Mongoose => {
         useCreateIndex: true,
         useNewUrlParser: true,
         promiseLibrary: global.Promise,
+        useUnifiedTopology: true,
     });
 
     // connection failed
@@ -40,7 +41,12 @@ const connect = (): Mongoose => {
     return mongoose;
 };
 
+export const disconnect = (): void => {
+    mongoose.disconnect();
+};
+
 export default {
     instance: mongoose,
     connect: connect,
+    disconnect: disconnect,
 };

@@ -1,3 +1,6 @@
+// load environment variables
+require('dotenv').config();
+
 const MONGODB = {
     uri: `mongodb+srv://chuntonggao:${process.env.DB_PASSWORD}@cluster0-i4fbo.mongodb.net/test?retryWrites=true&w=majority`,
 };

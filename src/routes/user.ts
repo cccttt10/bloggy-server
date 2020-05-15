@@ -218,8 +218,7 @@ export const loginAdmin = (req: Request, res: Response): void => {
 };
 
 export const register = (req: Request, res: Response): void => {
-    const { name, password, phone, email, introduce, type } = req.body;
-
+    const { name, password, phone, email, bio, type } = req.body;
     if (!email) {
         respondToClient(res, 400, 2, 'Email cannot be empty.');
         return;
@@ -247,7 +246,7 @@ export const register = (req: Request, res: Response): void => {
     User.findOne({ email: email })
         .then(data => {
             if (data) {
-                respondToClient(res, 200, 1, '用户邮箱已存在！');
+                respondToClient(res, 200, 1, 'User already exists.');
                 return;
             }
             // save user to db
@@ -257,7 +256,7 @@ export const register = (req: Request, res: Response): void => {
                 password: md5(password + MD5_SUFFIX),
                 phone,
                 type,
-                introduce,
+                bio,
             });
             newUser.save().then(data => {
                 respondToClient(res, 200, 0, 'Registration successful', data);

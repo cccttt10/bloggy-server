@@ -16,5 +16,5 @@ export default async (req: Request, res: Response): Promise<void> => {
         name: name,
         user: user,
     });
-    res.status(201).json({ newCategory });
+    res.status(201).json({ category: newCategory });
 };

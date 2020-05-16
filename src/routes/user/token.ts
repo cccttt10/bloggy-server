@@ -32,7 +32,7 @@ export const sendToken = ({
 
     res.cookie('jwt', token, cookieOptions);
 
-    // Remove password from response
+    // remove password from response
     user.password = undefined;
 
     res.status(statusCode).json({ user: user });

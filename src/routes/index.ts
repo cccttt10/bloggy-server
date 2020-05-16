@@ -7,6 +7,7 @@ const setUpRoutes = (app: Express): void => {
     app.post('/deleteAllUsers', user.deleteAllUsers);
     // app.post('/delUser', user.delUser);
     // app.get('/getUserList', user.getUserList);
+    app.post('/getUser', user.getUser);
     app.post('/login', user.login);
     // app.post('/loginAdmin', user.loginAdmin);
     app.get('/logout', user.logout);

@@ -12,19 +12,16 @@ import users from '../test-data/users';
 describe('/register', () => {
     const agent = request('http://localhost:3300');
 
-    beforeEach(async () => {
+    const cleanup = async (): Promise<void> => {
         const res = await agent.post('/deleteAllUsers').send({
             sudoSecret: process.env.SUDO_SECRET,
         });
         expect(res.status).to.equal(202);
-    });
+    };
 
-    afterEach(async () => {
-        const res = await agent
-            .post('/deleteAllUsers')
-            .send({ sudoSecret: process.env.SUDO_SECRET });
-        expect(res.status).to.equal(202);
-    });
+    beforeEach(cleanup);
+
+    afterEach(cleanup);
 
     it('should return 400 if name is not provided', async () => {
         const res = await agent.post('/register').send({
@@ -76,12 +73,12 @@ describe('/register', () => {
         expect(cookie.jwt.value).to.not.equal('');
         expect(res.body).to.have.property('user');
         expect(res.body.user).to.not.have.property('password');
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(201);
     });
 
     it('should return 400 if email is already registered', async () => {
         let res = await agent.post('/register').send(users[0]);
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(201);
 
         res = await agent.post('/register').send({
             name: users[0].name + 'different name ',

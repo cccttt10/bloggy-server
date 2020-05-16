@@ -6,7 +6,7 @@ import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
 import { sendToken } from './token';
 
 export default async (req: Request, res: Response): Promise<void> => {
-    const { name, password, phone, email, bio } = req.body;
+    const { name, password, phone, email, bio }: IUser = req.body;
 
     if (!email) {
         throw new ServerError({
@@ -54,7 +54,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     const newUser: UserDocument = await User.findOne({ email: email });
     sendToken({
         user: newUser,
-        statusCode: 200,
+        statusCode: 201,
         res: res,
     });
 };

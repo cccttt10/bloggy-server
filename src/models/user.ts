@@ -6,7 +6,6 @@ import db from '../mongodb.config';
 const instance = db.instance;
 
 export type UserDocument = mongoose.Document & {
-    githubId: string;
     name: string;
     phone: string;
     imgUrl: string;
@@ -20,7 +19,6 @@ export type UserDocument = mongoose.Document & {
 };
 
 const userSchema = new instance.Schema({
-    githubId: { type: String, default: '' },
     name: { type: String, required: true, default: '' },
     phone: { type: String, default: '' },
     imgUrl: { type: String, default: '' },

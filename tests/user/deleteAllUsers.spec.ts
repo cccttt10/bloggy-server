@@ -6,7 +6,7 @@ require('dotenv').config();
 import { expect } from 'chai';
 import request from 'supertest';
 
-describe('/delAllUsers', () => {
+describe('/deleteAllUsers', () => {
     const agent = request('http://localhost:3300');
 
     it('should delete all users if sudo secret is provided', async () => {

@@ -41,6 +41,7 @@ describe('/login', () => {
         });
         expect(cookie.jwt.value).to.not.equal('');
         expect(res.body).to.have.property('user');
+        expect(res.body.user).to.not.have.property('password');
         expect(res.status).to.equal(200);
     });
 

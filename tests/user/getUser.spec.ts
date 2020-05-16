@@ -36,6 +36,7 @@ describe('/getUser', () => {
         res = await agent.post('/getUser').send({ id: user.id });
         expect(res.body).to.have.property('user');
         expect(res.body.user).to.deep.equal(user);
+        expect(res.body.user).to.not.have.property('password');
         expect(res.status).to.equal(200);
     });
 

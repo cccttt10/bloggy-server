@@ -17,6 +17,5 @@ export default async (req: Request, res: Response): Promise<void> => {
             statusCode: 400,
             message: 'User id does not exist.',
         });
-    user.password = undefined; // remove password from response
     res.status(200).json({ user: user });
 };

@@ -18,7 +18,8 @@
         "mongoose-auto-increment": "^5.0.1",
         "morgan": "~1.9.0",
         "node-fetch": "^2.3.0",
-        "set-cookie-parser": "^2.4.5"
+        "set-cookie-parser": "^2.4.5",
+        "validator": "^13.0.0"
     },
     "description": "server code for our blog project",
     "devDependencies": {
@@ -39,6 +40,7 @@
         "@types/node-fetch": "^2.5.7",
         "@types/set-cookie-parser": "0.0.6",
         "@types/supertest": "^2.0.9",
+        "@types/validator": "^13.0.0",
         "@typescript-eslint/eslint-plugin": "^2.33.0",
         "@typescript-eslint/parser": "^2.33.0",
         "chai": "^4.2.0",

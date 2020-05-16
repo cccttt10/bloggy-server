@@ -62,7 +62,7 @@ describe('/register', () => {
             name: users[0].name,
             password: users[0].password,
             phone: users[0].phone,
-            email: 'heihegao@gmail',
+            email: 'invalid',
             bio: users[0].bio,
         } as UserDocument);
         expect(res.status).to.equal(400);
@@ -76,6 +76,7 @@ describe('/register', () => {
         });
         expect(cookie.jwt.value).to.not.equal('');
         expect(res.body).to.have.property('user');
+        expect(res.body.user).to.not.have.property('password');
         expect(res.status).to.equal(200);
     });
 

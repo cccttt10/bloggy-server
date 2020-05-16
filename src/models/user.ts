@@ -1,6 +1,6 @@
-import crypto from 'crypto';
 import mongoose from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
+import validator from 'validator';
 
 import db from '../mongodb.config';
 const instance = db.instance;
@@ -19,20 +19,22 @@ export type UserDocument = mongoose.Document & {
 };
 
 const userSchema = new instance.Schema({
-    name: { type: String, required: true, default: '' },
+    name: { type: String, required: [true, 'User must have a name. '] },
     phone: { type: String, default: '' },
     imgUrl: { type: String, default: '' },
-    email: { type: String, default: '' },
+    email: {
+        type: String,
+        unique: true,
+        required: [true, 'User must have an email address.'],
+        validate: [validator.isEmail, 'Please provide a valid email'],
+    },
     bio: { type: String, default: '' },
     avatar: { type: String, default: 'user' },
-    location: { type: String, default: 'user' },
+    location: { type: String, default: 'Canada' },
     password: {
         type: String,
-        required: true,
-        default: crypto
-            .createHash('md5')
-            .update(process.env.auth_default_password || 'root')
-            .digest('hex'),
+        required: [true, 'User must have a password'],
+        select: false,
     },
     createdOn: { type: Date, default: Date.now },
     updatedOn: { type: Date, default: Date.now },

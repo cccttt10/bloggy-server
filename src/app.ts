@@ -19,12 +19,6 @@ import path from 'path';
 const app: Express = express();
 
 /*
-configure view engine
-*/
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-/*
 use logger
 */
 if (process.env.NODE_ENV !== 'test') {
@@ -88,9 +82,7 @@ app.use(function (
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render error page
-    res.status(err.status || 500);
-    res.render('error');
+    res.status(err.status || 500).send({ message: 'Unexpected error' });
 });
 
 export default app;

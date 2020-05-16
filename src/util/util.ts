@@ -49,7 +49,7 @@ export const tryAsync = (asyncFn: AsyncFunc): WrappedFunc => {
             } else {
                 consola.error(err);
                 res.status(500).send({
-                    message: 'Your Internet connection is terrible! Please check!',
+                    message: 'Unexpected error.',
                 });
             }
         });

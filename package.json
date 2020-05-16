@@ -55,7 +55,7 @@
     "license": "ISC",
     "name": "blog-server",
     "scripts": {
-        "build": "rm -rf build/ && npm run check && npm run tsc-build && cp -r src/views build/views",
+        "build": "rm -rf build/ && npm run check && npm run tsc-build",
         "check": "npm run prettier-check && npm run eslint-check && npm run tsc-check",
         "eslint-check": "eslint --no-error-on-unmatched-pattern src/** tests/** --ext .js --ext .ts",
         "eslint-fix": "eslint --no-error-on-unmatched-pattern src/** tests/** --ext .js --ext .ts --fix",

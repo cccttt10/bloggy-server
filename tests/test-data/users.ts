@@ -1,4 +1,6 @@
-export default [
+import { IUser } from '../../src/models/user';
+
+const users: IUser[] = [
     {
         name: 'Chuntong Gao',
         password: 'chuntonggao',
@@ -7,3 +9,5 @@ export default [
         bio: 'Chuntong Gao is very handsome',
     },
 ];
+
+export default users;

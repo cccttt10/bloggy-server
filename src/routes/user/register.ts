@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import validator from 'validator';
 
-import { User, UserDocument } from '../../models/user';
+import { IUser, User, UserDocument } from '../../models/user';
 import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
 import { sendToken } from './token';
 
@@ -43,13 +43,14 @@ export default async (req: Request, res: Response): Promise<void> => {
     }
 
     // save new user to db
-    await new User({
+    const userInfo: IUser = {
         email,
         name,
         password: md5(password + MD5_SUFFIX),
         phone,
         bio,
-    } as UserDocument).save();
+    };
+    await new User(userInfo).save();
     const newUser: UserDocument = await User.findOne({ email: email });
     sendToken({
         user: newUser,

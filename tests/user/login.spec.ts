@@ -7,7 +7,6 @@ import { expect } from 'chai';
 import setCookie from 'set-cookie-parser';
 import request from 'supertest';
 
-import { UserDocument } from '../../src/models/user';
 import users from '../test-data/users';
 
 describe('/login', () => {
@@ -28,7 +27,7 @@ describe('/login', () => {
     });
 
     it('should allow a registered user to login', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -46,7 +45,7 @@ describe('/login', () => {
     });
 
     it('should return 400 if email exists but password is wrong', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -57,7 +56,7 @@ describe('/login', () => {
     });
 
     it('should return 400 if email does not exist', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -68,7 +67,7 @@ describe('/login', () => {
     });
 
     it('should return 400 if email is not provided', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -78,7 +77,7 @@ describe('/login', () => {
     });
 
     it('should return 400 if password is not provided', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({

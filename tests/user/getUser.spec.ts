@@ -6,7 +6,6 @@ require('dotenv').config();
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { UserDocument } from '../../src/models/user';
 import users from '../test-data/users';
 
 describe('/getUser', () => {
@@ -27,7 +26,7 @@ describe('/getUser', () => {
     });
 
     it('should get user info if user id is provided and id exists in db', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.body).to.have.property('user');
         expect(res.status).to.equal(200);
 
@@ -41,7 +40,7 @@ describe('/getUser', () => {
     });
 
     it('should return 400 if user id is not provided', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.body).to.have.property('user');
         expect(res.status).to.equal(200);
 
@@ -50,7 +49,7 @@ describe('/getUser', () => {
     });
 
     it('should return 400 if user id does not exist in db', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.body).to.have.property('user');
         expect(res.status).to.equal(200);
 

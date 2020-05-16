@@ -5,18 +5,20 @@ import validator from 'validator';
 import db from '../mongodb.config';
 const instance = db.instance;
 
-export type UserDocument = mongoose.Document & {
+export interface IUser {
     name: string;
-    phone: string;
-    imgUrl: string;
+    phone?: string;
+    imgUrl?: string;
     email: string;
-    bio: string;
-    avatar: string;
-    location: string;
+    bio?: string;
+    avatar?: string;
+    location?: string;
     password: string;
-    createdOn: Date;
-    updatedOn: Date;
-};
+    createdOn?: Date;
+    updatedOn?: Date;
+}
+
+export type UserDocument = mongoose.Document & IUser;
 
 const userSchema = new instance.Schema({
     name: { type: String, required: [true, 'User must have a name. '] },

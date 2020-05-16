@@ -7,7 +7,6 @@ import { expect } from 'chai';
 import setCookie from 'set-cookie-parser';
 import request from 'supertest';
 
-import { UserDocument } from '../../src/models/user';
 import users from '../test-data/users';
 
 describe('/register', () => {
@@ -33,7 +32,7 @@ describe('/register', () => {
             phone: users[0].phone,
             email: users[0].email,
             bio: users[0].bio,
-        } as UserDocument);
+        });
         expect(res.status).to.equal(400);
     });
 
@@ -43,7 +42,7 @@ describe('/register', () => {
             phone: users[0].phone,
             email: users[0].email,
             bio: users[0].bio,
-        } as UserDocument);
+        });
         expect(res.status).to.equal(400);
     });
 
@@ -53,7 +52,7 @@ describe('/register', () => {
             password: users[0].password,
             phone: users[0].phone,
             bio: users[0].bio,
-        } as UserDocument);
+        });
         expect(res.status).to.equal(400);
     });
 
@@ -64,12 +63,12 @@ describe('/register', () => {
             phone: users[0].phone,
             email: 'invalid',
             bio: users[0].bio,
-        } as UserDocument);
+        });
         expect(res.status).to.equal(400);
     });
 
     it('should register a new user and give token upon registration', async () => {
-        const res = await agent.post('/register').send(users[0] as UserDocument);
+        const res = await agent.post('/register').send(users[0]);
         expect(res.header).to.have.property('set-cookie');
         const cookie = setCookie.parse(res.header['set-cookie'], {
             map: true,
@@ -81,7 +80,7 @@ describe('/register', () => {
     });
 
     it('should return 400 if email is already registered', async () => {
-        let res = await agent.post('/register').send(users[0] as UserDocument);
+        let res = await agent.post('/register').send(users[0]);
         expect(res.status).to.equal(200);
 
         res = await agent.post('/register').send({
@@ -90,7 +89,7 @@ describe('/register', () => {
             phone: users[0].phone + 'different phone',
             email: users[0].email,
             bio: users[0].bio + 'different bio',
-        } as UserDocument);
+        });
         expect(res.status).to.equal(400);
     });
 });

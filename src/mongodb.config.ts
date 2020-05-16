@@ -1,5 +1,4 @@
 import consola from 'consola';
-import { ExpressError } from 'global';
 import mongoose, { Mongoose } from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
 
@@ -25,8 +24,9 @@ const connect = (): Mongoose => {
     });
 
     // connection failed
-    mongoose.connection.on('error', (error: ExpressError) => {
-        consola.error('db connection failed!', error);
+    mongoose.connection.on('error', err => {
+        consola.error('db connection failed!');
+        consola.log(err);
     });
 
     // connection successful

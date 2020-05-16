@@ -1,8 +1,4 @@
 declare module 'global' {
-    export interface ExpressError extends Error {
-        status?: number;
-    }
-
     export type ArticleType = 1 | 2 | 3; // 1: blog post, 2: resume, 3: about me
     export type ArticleState = 1 | 2; // 1: draft, 2: published
     export type Originality = 0 | 1 | 2; // 0: original, 1: repost, 2: mixed

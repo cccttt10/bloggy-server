@@ -11,7 +11,6 @@ import cookieParser from 'cookie-parser';
 import { Express, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import session from 'express-session';
-import { ExpressError } from 'global';
 import createError from 'http-errors';
 import logger from 'morgan';
 import path from 'path';
@@ -69,7 +68,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 error handler
 */
 app.use(function (
-    err: ExpressError,
+    err: Error & { status?: number },
     req: Request,
     res: Response,
     next: NextFunction
@@ -82,7 +81,7 @@ app.use(function (
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    res.status(err.status || 500).send({ message: 'Unexpected error' });
+    res.status(err.status || 500).send({ message: 'Unexpected server error.' });
 });
 
 export default app;

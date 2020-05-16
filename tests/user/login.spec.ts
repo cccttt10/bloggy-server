@@ -4,6 +4,7 @@ load environment variables
 require('dotenv').config();
 
 import { expect } from 'chai';
+import setCookie from 'set-cookie-parser';
 import request from 'supertest';
 
 import { UserDocument } from '../../src/models/user';
@@ -28,7 +29,6 @@ describe('/login', () => {
 
     it('should allow a registered user to login', async () => {
         let res = await agent.post('/register').send(users[0] as UserDocument);
-        expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -36,12 +36,15 @@ describe('/login', () => {
             password: users[0].password,
         });
         expect(res.header).to.have.property('set-cookie');
+        const cookie = setCookie.parse(res.header['set-cookie'], {
+            map: true,
+        });
+        expect(cookie.jwt.value).to.not.equal('');
         expect(res.status).to.equal(200);
     });
 
     it('should return 400 if email exists but password is wrong', async () => {
         let res = await agent.post('/register').send(users[0] as UserDocument);
-        expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -53,7 +56,6 @@ describe('/login', () => {
 
     it('should return 400 if email does not exist', async () => {
         let res = await agent.post('/register').send(users[0] as UserDocument);
-        expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -65,7 +67,6 @@ describe('/login', () => {
 
     it('should return 400 if email is not provided', async () => {
         let res = await agent.post('/register').send(users[0] as UserDocument);
-        expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({
@@ -76,7 +77,6 @@ describe('/login', () => {
 
     it('should return 400 if password is not provided', async () => {
         let res = await agent.post('/register').send(users[0] as UserDocument);
-        expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/login').send({

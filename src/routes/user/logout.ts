@@ -1,12 +1,10 @@
-// import { Request, Response } from 'express';
+import { Request, Response } from 'express';
 
-// import { respondToClient } from '../../util/util';
-
-// export default (req: Request, res: Response): void => {
-//     if (req.session.userInfo) {
-//         req.session.userInfo = null; // delete session
-//         respondToClient(res, 200, 0, 'Logout successful.');
-//     } else {
-//         respondToClient(res, 200, 1, 'You have not logged out yet.');
-//     }
-// };
+export default async (req: Request, res: Response): Promise<void> => {
+    await new Promise(resolve => resolve()); // to comply with Promise<void> return type
+    res.cookie('jwt', '', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true,
+    });
+    res.status(200).json({});
+};

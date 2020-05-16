@@ -1,7 +1,6 @@
 {
     "author": "Chuntong Gao, Bolin Wang, Yang Song, Hongkaiyue Zhou",
     "dependencies": {
-        "@types/jsonwebtoken": "^8.5.0",
         "babel-preset-env": "^1.7.0",
         "babel-register": "^6.26.0",
         "consola": "^2.12.1",
@@ -18,7 +17,8 @@
         "mongoose": "^5.3.7",
         "mongoose-auto-increment": "^5.0.1",
         "morgan": "~1.9.0",
-        "node-fetch": "^2.3.0"
+        "node-fetch": "^2.3.0",
+        "set-cookie-parser": "^2.4.5"
     },
     "description": "server code for our blog project",
     "devDependencies": {
@@ -30,12 +30,14 @@
         "@types/express": "^4.17.6",
         "@types/express-session": "^1.17.0",
         "@types/http-errors": "^1.6.3",
+        "@types/jsonwebtoken": "^8.5.0",
         "@types/mocha": "^7.0.2",
         "@types/mongodb": "^3.5.17",
         "@types/mongoose": "^5.7.19",
         "@types/mongoose-auto-increment": "^5.0.33",
         "@types/morgan": "^1.9.0",
         "@types/node-fetch": "^2.5.7",
+        "@types/set-cookie-parser": "0.0.6",
         "@types/supertest": "^2.0.9",
         "@typescript-eslint/eslint-plugin": "^2.33.0",
         "@typescript-eslint/parser": "^2.33.0",

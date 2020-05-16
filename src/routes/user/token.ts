@@ -6,7 +6,7 @@ import { UserDocument } from '../../models/user';
 const ONE_DAY = 24 * 60 * 60 * 1000;
 const createToken = (id: string): string => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '20s',
+        expiresIn: '1d',
     });
 };
 

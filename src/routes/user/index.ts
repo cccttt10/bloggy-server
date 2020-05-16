@@ -5,7 +5,7 @@ import delAllUsers from './delAllUsers';
 // import getUserList from './getUserList';
 import login from './login';
 // import loginAdmin from './loginAdmin';
-// import logout from './logout';
+import logout from './logout';
 import register from './register';
 
 export default {
@@ -15,6 +15,6 @@ export default {
     // getUserList: tryAsync(getUserList),
     login: tryAsync(login),
     // loginAdmin: tryAsync(loginAdmin),
-    // logout: tryAsync(logout),
+    logout: tryAsync(logout),
     register: tryAsync(register),
 };

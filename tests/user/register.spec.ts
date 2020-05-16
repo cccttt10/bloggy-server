@@ -4,6 +4,7 @@ load environment variables
 require('dotenv').config();
 
 import { expect } from 'chai';
+import setCookie from 'set-cookie-parser';
 import request from 'supertest';
 
 import { UserDocument } from '../../src/models/user';
@@ -70,12 +71,15 @@ describe('/register', () => {
     it('should register a new user and give token upon registration', async () => {
         const res = await agent.post('/register').send(users[0] as UserDocument);
         expect(res.header).to.have.property('set-cookie');
+        const cookie = setCookie.parse(res.header['set-cookie'], {
+            map: true,
+        });
+        expect(cookie.jwt.value).to.not.equal('');
         expect(res.status).to.equal(200);
     });
 
     it('should return 400 if email is already registered', async () => {
         let res = await agent.post('/register').send(users[0] as UserDocument);
-        expect(res.header).to.have.property('set-cookie');
         expect(res.status).to.equal(200);
 
         res = await agent.post('/register').send({

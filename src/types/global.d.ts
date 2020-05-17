@@ -1,4 +1,9 @@
+import { Request } from 'express';
+
+import { UserDocument } from '../models/user';
+
 declare module 'global' {
+    export type AugmentedRequest = Request & { verifiedUser?: UserDocument };
     export type ArticleType = 1 | 2 | 3; // 1: blog post, 2: resume, 3: about me
     export type ArticleState = 1 | 2; // 1: draft, 2: published
     export type Originality = 0 | 1 | 2; // 0: original, 1: repost, 2: mixed

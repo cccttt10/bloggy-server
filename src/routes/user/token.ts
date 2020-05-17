@@ -1,7 +1,10 @@
-import { Response } from 'express';
-import jwt from 'jsonwebtoken';
+import { NextFunction, Request, Response } from 'express';
+import { AugmentedRequest } from 'global';
+import jwt, { Secret, VerifyOptions } from 'jsonwebtoken';
+import { promisify } from 'util';
 
-import { UserDocument } from '../../models/user';
+import { User, UserDocument } from '../../models/user';
+import { ServerError, tryAsync } from '../../util/util';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 const createToken = (id: string): string => {
@@ -33,3 +36,60 @@ export const sendToken = ({
     res.cookie('jwt', token, cookieOptions);
     res.status(statusCode).json({ user: user });
 };
+
+export const verifyUser = tryAsync(
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        /*
+        1) get token and check if it's there
+        */
+        let token: string;
+        if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith('Bearer')
+        ) {
+            token = req.headers.authorization.split(' ')[1];
+        } else if (req.cookies.jwt) {
+            token = req.cookies.jwt;
+        }
+
+        if (!token) {
+            throw new ServerError({
+                statusCode: 401,
+                message:
+                    'You are not logged in. Please log in to complete this action.',
+            });
+        }
+
+        /*
+        2) verify token
+        */
+        const promisifiedVerify: (
+            token: string,
+            secretOrPublicKey: Secret,
+            options?: VerifyOptions
+        ) => object | string = promisify(jwt.verify);
+        interface DecodedToken {
+            id: string;
+        }
+        const decoded: DecodedToken = (await promisifiedVerify(
+            token,
+            process.env.JWT_SECRET
+        )) as DecodedToken;
+
+        /*
+        3 ) check if user still exists
+        */
+        const verifiedUser: UserDocument = await User.findById(decoded.id);
+        if (!verifiedUser) {
+            throw new ServerError({
+                statusCode: 401,
+                message: 'The user corresponding to this token no longer exists.',
+            });
+        }
+
+        // grant access to protected route
+        (req as AugmentedRequest).verifiedUser = verifiedUser;
+
+        next();
+    }
+);

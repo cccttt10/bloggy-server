@@ -6,6 +6,8 @@ require('dotenv').config();
 import { expect } from 'chai';
 import request, { SuperTest, Test } from 'supertest';
 
+import { MESSAGES } from '../../src/util/constants';
+
 describe('/deleteAllUsers', () => {
     let agent: SuperTest<Test>;
 
@@ -20,10 +22,11 @@ describe('/deleteAllUsers', () => {
         expect(res.status).to.equal(202);
     });
 
-    it('should return 400 when attempting to delete all users with wrong sudo secret', async () => {
+    it('should return 401 when attempting to delete all users with wrong sudo secret', async () => {
         const res = await agent.post('/deleteAllUsers').send({
             sudoSecret: process.env.SUDO_SECRET + 'wrong',
         });
-        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal(MESSAGES.SUDO_ACCESS_ONLY);
+        expect(res.status).to.equal(401);
     });
 });

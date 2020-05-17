@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import validator from 'validator';
 
 import { IUser, User, UserDocument } from '../../models/user';
+import { MESSAGES } from '../../util/constants';
 import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
 import { sendToken } from './token';
 
@@ -10,25 +11,25 @@ export default async (req: Request, res: Response): Promise<void> => {
 
     if (!email) {
         throw new ServerError({
-            message: 'Email cannot be empty.',
+            message: MESSAGES.EMPTY_EMAIL,
             statusCode: 400,
         });
     }
 
     if (!validator.isEmail(email)) {
         throw new ServerError({
-            message: 'Email has invalid format.',
+            message: MESSAGES.INVALID_EMAIL,
             statusCode: 400,
         });
     }
 
     if (!name) {
-        throw new ServerError({ message: 'Name cannot be empty.', statusCode: 400 });
+        throw new ServerError({ message: MESSAGES.EMPTY_NAME, statusCode: 400 });
     }
 
     if (!password) {
         throw new ServerError({
-            message: 'Password cannot be empty.',
+            message: MESSAGES.EMPTY_PASSWORD,
             statusCode: 400,
         });
     }
@@ -37,7 +38,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     const user: UserDocument = await User.findOne({ email: email });
     if (user) {
         throw new ServerError({
-            message: 'User already exists. Email is already used.',
+            message: MESSAGES.DUPLICATE_EMAIL,
             statusCode: 400,
         });
     }

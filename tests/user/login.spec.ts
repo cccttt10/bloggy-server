@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import setCookie from 'set-cookie-parser';
 import request, { SuperTest, Test } from 'supertest';
 
+import { MESSAGES } from '../../src/util/constants';
 import users from '../test-data/users';
 
 describe('/login', () => {
@@ -52,6 +53,7 @@ describe('/login', () => {
             email: users[0].email,
             password: users[0].password + 'wrong',
         });
+        expect(res.body.message).to.equal(MESSAGES.WRONG_CREDENTIALS);
         expect(res.status).to.equal(400);
     });
 
@@ -63,6 +65,7 @@ describe('/login', () => {
             email: users[0].email + 'does not exist',
             password: users[0].password,
         });
+        expect(res.body.message).to.equal(MESSAGES.WRONG_CREDENTIALS);
         expect(res.status).to.equal(400);
     });
 
@@ -73,6 +76,7 @@ describe('/login', () => {
         res = await agent.post('/login').send({
             password: users[0].password,
         });
+        expect(res.body.message).to.equal(MESSAGES.EMPTY_EMAIL);
         expect(res.status).to.equal(400);
     });
 
@@ -83,6 +87,7 @@ describe('/login', () => {
         res = await agent.post('/login').send({
             email: users[0].email,
         });
+        expect(res.body.message).to.equal(MESSAGES.EMPTY_PASSWORD);
         expect(res.status).to.equal(400);
     });
 });

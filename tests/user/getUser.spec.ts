@@ -6,6 +6,7 @@ require('dotenv').config();
 import { expect } from 'chai';
 import request, { SuperTest, Test } from 'supertest';
 
+import { MESSAGES } from '../../src/util/constants';
 import users from '../test-data/users';
 
 describe('/getUser', () => {
@@ -45,6 +46,7 @@ describe('/getUser', () => {
         expect(res.status).to.equal(201);
 
         res = await agent.post('/getUser').send({});
+        expect(res.body.message).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
         expect(res.status).to.equal(400);
     });
 
@@ -56,6 +58,7 @@ describe('/getUser', () => {
         const user = res.body.user;
 
         res = await agent.post('/getUser').send({ id: user.id * 10 });
+        expect(res.body.message).to.equal(MESSAGES.USER_ID_NOT_FOUND);
         expect(res.status).to.equal(400);
     });
 });

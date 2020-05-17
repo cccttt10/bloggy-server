@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import { User, UserDocument } from '../../models/user';
+import { MESSAGES } from '../../util/constants';
 import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
 import { sendToken } from './token';
 
@@ -9,14 +10,14 @@ export default async (req: Request, res: Response): Promise<void> => {
 
     if (!email) {
         throw new ServerError({
-            message: 'Email cannot be empty.',
+            message: MESSAGES.EMPTY_EMAIL,
             statusCode: 400,
         });
     }
 
     if (!password) {
         throw new ServerError({
-            message: 'Password cannot be empty.',
+            message: MESSAGES.EMPTY_PASSWORD,
             statusCode: 400,
         });
     }
@@ -28,7 +29,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
     if (!user) {
         throw new ServerError({
-            message: 'Email or password is wrong.',
+            message: MESSAGES.WRONG_CREDENTIALS,
             statusCode: 400,
         });
     }

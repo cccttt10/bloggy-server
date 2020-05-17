@@ -4,6 +4,7 @@ import jwt, { Secret, VerifyOptions } from 'jsonwebtoken';
 import { promisify } from 'util';
 
 import { User, UserDocument } from '../../models/user';
+import { MESSAGES } from '../../util/constants';
 import { ServerError, tryAsync } from '../../util/util';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
@@ -55,8 +56,7 @@ export const verifyUser = tryAsync(
         if (!token) {
             throw new ServerError({
                 statusCode: 401,
-                message:
-                    'You are not logged in. Please log in to complete this action.',
+                message: MESSAGES.NOT_LOGGED_IN,
             });
         }
 
@@ -83,7 +83,7 @@ export const verifyUser = tryAsync(
         if (!verifiedUser) {
             throw new ServerError({
                 statusCode: 401,
-                message: 'The user corresponding to this token no longer exists.',
+                message: MESSAGES.NO_USER_FOR_THIS_TOKEN,
             });
         }
 

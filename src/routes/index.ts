@@ -2,9 +2,10 @@ import { Express } from 'express';
 
 import category from './category/index';
 import user from './user/index';
+import { verifyUser } from './user/token';
 
 const setUpRoutes = (app: Express): void => {
-    app.post('/createCategory', category.createCategory);
+    app.post('/createCategory', verifyUser, category.createCategory);
     app.post('/deleteAllCategories', category.deleteAllCategories);
 
     app.post('/deleteAllUsers', user.deleteAllUsers);

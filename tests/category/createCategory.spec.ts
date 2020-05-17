@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import request, { SuperTest, Test } from 'supertest';
 
 import { ICategory } from '../../src/models/category';
+import { MESSAGES } from '../../src/util/constants';
 import categories from '../test-data/categories';
 import users from '../test-data/users';
 
@@ -39,11 +40,12 @@ describe('/createCategory', () => {
         expect(registerRes.status).to.equal(201);
 
         const userId = registerRes.body.user['_id'];
-
+        const cookie = registerRes.header['set-cookie'];
         {
             const newCategory: ICategory = { ...categories[0], user: userId };
             const categoryRes = await agent
                 .post('/createCategory')
+                .set('Cookie', cookie)
                 .send(newCategory);
             expect(categoryRes.body).to.have.property('category');
             const returnedCategory = {
@@ -59,6 +61,7 @@ describe('/createCategory', () => {
             const newCategory: ICategory = { ...categories[1], user: userId };
             const categoryRes = await agent
                 .post('/createCategory')
+                .set('Cookie', cookie)
                 .send(newCategory);
             expect(categoryRes.body).to.have.property('category');
             const returnedCategory = {
@@ -71,6 +74,28 @@ describe('/createCategory', () => {
         }
     });
 
+    it('should return 401 if a user attempts to create a category for someone else', async () => {
+        const registerRes0 = await agent.post('/register').send(users[0]);
+        expect(registerRes0.body).to.have.property('user');
+        expect(registerRes0.body.user).to.have.property('_id');
+        expect(registerRes0.status).to.equal(201);
+
+        const userId0 = registerRes0.body.user['_id'];
+        const newCategory: ICategory = { ...categories[0], user: userId0 };
+
+        const registerRes1 = await agent.post('/register').send(users[1]);
+        expect(registerRes1.status).to.equal(201);
+
+        const cookie = registerRes1.header['set-cookie'];
+
+        const categoryRes = await agent
+            .post('/createCategory')
+            .set('Cookie', cookie)
+            .send(newCategory);
+        expect(categoryRes.body.message).to.equal(MESSAGES.UNAUTHORIZED);
+        expect(categoryRes.status).to.equal(401);
+    });
+
     it('should return 400 when the same user attempts to create a duplicate category', async () => {
         const registerRes = await agent.post('/register').send(users[0]);
         expect(registerRes.body).to.have.property('user');
@@ -78,9 +103,13 @@ describe('/createCategory', () => {
         expect(registerRes.status).to.equal(201);
 
         const userId = registerRes.body.user['_id'];
+        const cookie = registerRes.header['set-cookie'];
         const newCategory: ICategory = { ...categories[0], user: userId };
 
-        const categoryRes = await agent.post('/createCategory').send(newCategory);
+        const categoryRes = await agent
+            .post('/createCategory')
+            .set('Cookie', cookie)
+            .send(newCategory);
         expect(categoryRes.body).to.have.property('category');
         const returnedCategory = {
             name: categoryRes.body.category.name,
@@ -92,7 +121,11 @@ describe('/createCategory', () => {
 
         const duplicateCategoryRes = await agent
             .post('/createCategory')
+            .set('Cookie', cookie)
             .send(newCategory);
+        expect(duplicateCategoryRes.body.message).to.equal(
+            MESSAGES.DUPLICATE_CATEGORY
+        );
         expect(duplicateCategoryRes.status).to.equal(400);
     });
 
@@ -104,10 +137,12 @@ describe('/createCategory', () => {
             expect(registerRes.status).to.equal(201);
 
             const userId = registerRes.body.user['_id'];
+            const cookie = registerRes.header['set-cookie'];
             const newCategory: ICategory = { ...categories[0], user: userId };
 
             const categoryRes = await agent
                 .post('/createCategory')
+                .set('Cookie', cookie)
                 .send(newCategory);
             expect(categoryRes.body).to.have.property('category');
             const returnedCategory = {
@@ -125,10 +160,12 @@ describe('/createCategory', () => {
             expect(registerRes.status).to.equal(201);
 
             const userId = registerRes.body.user['_id'];
+            const cookie = registerRes.header['set-cookie'];
             const newCategory: ICategory = { ...categories[0], user: userId };
 
             const categoryRes = await agent
                 .post('/createCategory')
+                .set('Cookie', cookie)
                 .send(newCategory);
             expect(categoryRes.body).to.have.property('category');
             const returnedCategory = {

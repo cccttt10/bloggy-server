@@ -1,10 +1,20 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { AugmentedRequest } from 'global';
+import { ObjectId } from 'mongodb';
 
 import { Category, CategoryDocument, ICategory } from '../../models/category';
+import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
-export default async (req: Request, res: Response): Promise<void> => {
+export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     const { name, description, user, createdOn, updatedOn }: ICategory = req.body;
+
+    if ((req.verifiedUser._id as ObjectId).toHexString() !== user) {
+        throw new ServerError({
+            statusCode: 401,
+            message: MESSAGES.UNAUTHORIZED,
+        });
+    }
 
     const categoryAlreadyExists: boolean = await Category.exists({
         name: name,
@@ -13,7 +23,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     if (categoryAlreadyExists) {
         throw new ServerError({
             statusCode: 400,
-            message: 'This user already has this category.',
+            message: MESSAGES.DUPLICATE_CATEGORY,
         });
     }
 

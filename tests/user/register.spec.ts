@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import setCookie from 'set-cookie-parser';
 import request, { SuperTest, Test } from 'supertest';
 
+import { MESSAGES } from '../../src/util/constants';
 import users from '../test-data/users';
 
 describe('/register', () => {
@@ -33,6 +34,7 @@ describe('/register', () => {
             email: users[0].email,
             bio: users[0].bio,
         });
+        expect(res.body.message).to.equal(MESSAGES.EMPTY_NAME);
         expect(res.status).to.equal(400);
     });
 
@@ -43,6 +45,7 @@ describe('/register', () => {
             email: users[0].email,
             bio: users[0].bio,
         });
+        expect(res.body.message).to.equal(MESSAGES.EMPTY_PASSWORD);
         expect(res.status).to.equal(400);
     });
 
@@ -53,6 +56,7 @@ describe('/register', () => {
             phone: users[0].phone,
             bio: users[0].bio,
         });
+        expect(res.body.message).to.equal(MESSAGES.EMPTY_EMAIL);
         expect(res.status).to.equal(400);
     });
 
@@ -64,6 +68,7 @@ describe('/register', () => {
             email: 'invalid',
             bio: users[0].bio,
         });
+        expect(res.body.message).to.equal(MESSAGES.INVALID_EMAIL);
         expect(res.status).to.equal(400);
     });
 
@@ -90,6 +95,7 @@ describe('/register', () => {
             email: users[0].email,
             bio: users[0].bio + 'different bio',
         });
+        expect(res.body.message).to.equal(MESSAGES.DUPLICATE_EMAIL);
         expect(res.status).to.equal(400);
     });
 });

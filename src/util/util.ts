@@ -2,6 +2,8 @@ import consola from 'consola';
 import crypto from 'crypto';
 import { NextFunction, Request, Response } from 'express';
 
+import { MESSAGES } from './constants';
+
 export const MD5_SUFFIX = 'chuntonggao*&^%$#';
 
 export const md5 = (pwd: crypto.BinaryLike): string => {
@@ -49,7 +51,7 @@ export const tryAsync = (asyncFn: AsyncFunc): WrappedFunc => {
             } else {
                 consola.error(err);
                 res.status(500).send({
-                    message: 'Unexpected error.',
+                    message: MESSAGES.UNEXPECTED_ERROR,
                 });
             }
         });

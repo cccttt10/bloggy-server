@@ -1,0 +1,16 @@
+export const MESSAGES = {
+    DUPLICATE_CATEGORY: 'This user already has this category.',
+    DUPLICATE_EMAIL: 'User already exists. Email is already used.',
+    EMPTY_EMAIL: 'Email cannot be empty.',
+    EMPTY_NAME: 'Name cannot be empty',
+    EMPTY_PASSWORD: 'Password cannot be empty',
+    INVALID_EMAIL: 'Email has invalid format',
+    SUDO_ACCESS_ONLY: 'You need sudo privilege to access this route.',
+    NO_USER_FOR_THIS_TOKEN: 'The user corresponding to this token no longer exists.',
+    NOT_LOGGED_IN: 'You are not logged in. Please log in to complete this action.',
+    UNAUTHORIZED: 'You are not authorized to complete this action.',
+    UNEXPECTED_ERROR: 'Unexpected error',
+    USER_ID_NOT_FOUND: 'User id does not exist.',
+    USER_ID_NOT_PROVIDED: 'Please provide user id.',
+    WRONG_CREDENTIALS: 'Email or password is wrong.',
+};

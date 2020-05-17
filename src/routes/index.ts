@@ -7,6 +7,8 @@ import { verifyUser } from './user/token';
 const setUpRoutes = (app: Express): void => {
     app.post('/createCategory', verifyUser, category.createCategory);
     app.post('/deleteAllCategories', category.deleteAllCategories);
+    app.post('/deleteCategory', verifyUser, category.deleteCategory);
+    app.post('/getCategoryList', category.getCategoryList);
 
     app.post('/deleteAllUsers', user.deleteAllUsers);
     app.post('/getUser', user.getUser);

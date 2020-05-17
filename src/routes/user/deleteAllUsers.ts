@@ -12,5 +12,5 @@ export default async (req: Request, res: Response): Promise<void> => {
         });
     }
     await User.deleteMany({});
-    res.status(202).json({});
+    res.sendStatus(202);
 };

@@ -74,6 +74,20 @@ describe('/createCategory', () => {
         }
     });
 
+    it('should return 401 if a user attempts to create a category without logging in', async () => {
+        const registerRes = await agent.post('/register').send(users[0]);
+        expect(registerRes.body).to.have.property('user');
+        expect(registerRes.body.user).to.have.property('_id');
+        expect(registerRes.status).to.equal(201);
+
+        const userId = registerRes.body.user['_id'];
+
+        const newCategory: ICategory = { ...categories[0], user: userId };
+        const categoryRes = await agent.post('/createCategory').send(newCategory);
+        expect(categoryRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(categoryRes.status).to.equal(401);
+    });
+
     it('should return 401 if a user attempts to create a category for someone else', async () => {
         const registerRes0 = await agent.post('/register').send(users[0]);
         expect(registerRes0.body).to.have.property('user');

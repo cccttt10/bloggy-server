@@ -10,7 +10,6 @@ import consola from 'consola';
 import cookieParser from 'cookie-parser';
 import { Express, NextFunction, Request, Response } from 'express';
 import express from 'express';
-import session from 'express-session';
 import createError from 'http-errors';
 import logger from 'morgan';
 import path from 'path';
@@ -34,16 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /*
 configure cookie
 */
-app.use(cookieParser('blog_server_cookie'));
-app.use(
-    session({
-        secret: 'blog_server_cookie',
-        name: 'session_id', // cookie key in browser, default is connect.sid
-        resave: true,
-        saveUninitialized: true,
-        cookie: { maxAge: 60 * 1000 * 30, httpOnly: true }, // expiry date
-    })
-);
+app.use(cookieParser());
 
 /*
 connect to db

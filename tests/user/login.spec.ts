@@ -5,12 +5,12 @@ require('dotenv').config();
 
 import { expect } from 'chai';
 import setCookie from 'set-cookie-parser';
-import request from 'supertest';
+import request, { SuperTest, Test } from 'supertest';
 
 import users from '../test-data/users';
 
 describe('/login', () => {
-    const agent = request('http://localhost:3300');
+    let agent: SuperTest<Test>;
 
     const cleanup = async (): Promise<void> => {
         const res = await agent.post('/deleteAllUsers').send({
@@ -19,7 +19,10 @@ describe('/login', () => {
         expect(res.status).to.equal(202);
     };
 
-    beforeEach(cleanup);
+    beforeEach(() => {
+        agent = request('http://localhost:3300');
+        cleanup();
+    });
 
     afterEach(cleanup);
 

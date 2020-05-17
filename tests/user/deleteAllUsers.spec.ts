@@ -4,10 +4,14 @@ load environment variables
 require('dotenv').config();
 
 import { expect } from 'chai';
-import request from 'supertest';
+import request, { SuperTest, Test } from 'supertest';
 
 describe('/deleteAllUsers', () => {
-    const agent = request('http://localhost:3300');
+    let agent: SuperTest<Test>;
+
+    beforeEach(() => {
+        agent = request('http://localhost:3300');
+    });
 
     it('should delete all users if sudo secret is provided', async () => {
         const res = await agent.post('/deleteAllUsers').send({

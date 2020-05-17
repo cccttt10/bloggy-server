@@ -4,14 +4,14 @@ load environment variables
 require('dotenv').config();
 
 import { expect } from 'chai';
-import request from 'supertest';
+import request, { SuperTest, Test } from 'supertest';
 
 import { ICategory } from '../../src/models/category';
 import categories from '../test-data/categories';
 import users from '../test-data/users';
 
 describe('/createCategory', () => {
-    const agent = request('http://localhost:3300');
+    let agent: SuperTest<Test>;
 
     const cleanup = async (): Promise<void> => {
         let res = await agent.post('/deleteAllUsers').send({
@@ -25,7 +25,10 @@ describe('/createCategory', () => {
         expect(res.status).to.equal(202);
     };
 
-    beforeEach(cleanup);
+    beforeEach(() => {
+        agent = request('http://localhost:3300');
+        cleanup();
+    });
 
     afterEach(cleanup);
 

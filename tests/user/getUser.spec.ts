@@ -33,7 +33,7 @@ describe('/getUser', () => {
 
         const user = res.body.user;
 
-        res = await agent.post('/getUser').send({ id: user.id });
+        res = await agent.post('/getUser').send({ _id: user._id });
         expect(res.body).to.have.property('user');
         expect(res.body.user).to.deep.equal(user);
         expect(res.body.user).to.not.have.property('password');
@@ -57,7 +57,7 @@ describe('/getUser', () => {
 
         const user = res.body.user;
 
-        res = await agent.post('/getUser').send({ id: user.id * 10 });
+        res = await agent.post('/getUser').send({ _id: user._id + 'no such user' });
         expect(res.body.message).to.equal(MESSAGES.USER_ID_NOT_FOUND);
         expect(res.status).to.equal(400);
     });

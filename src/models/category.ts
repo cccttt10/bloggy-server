@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import autoIncrement from 'mongoose-auto-increment';
 
 import db from '../mongodb.config';
 const instance = db.instance;
@@ -27,13 +26,3 @@ const categorySchema = new instance.Schema({
 });
 
 export const Category = instance.model<CategoryDocument>('Category', categorySchema);
-
-/*
-configure auto-incrementing id
-*/
-categorySchema.plugin(autoIncrement.plugin, {
-    model: 'Category',
-    field: 'id',
-    startAt: 1,
-    incrementBy: 1,
-});

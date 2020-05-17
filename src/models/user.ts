@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import autoIncrement from 'mongoose-auto-increment';
 import validator from 'validator';
 
 import db from '../mongodb.config';
@@ -40,16 +39,6 @@ const userSchema = new instance.Schema({
     },
     createdOn: { type: Date, default: Date.now },
     updatedOn: { type: Date, default: Date.now },
-});
-
-/*
-configure auto-incrementing id
-*/
-userSchema.plugin(autoIncrement.plugin, {
-    model: 'User',
-    field: 'id',
-    startAt: 1,
-    incrementBy: 1,
 });
 
 export const User = instance.model<UserDocument>('User', userSchema);

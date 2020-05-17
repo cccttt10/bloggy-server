@@ -5,18 +5,30 @@ import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 export default async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.body;
-    if (!id) {
+    const { _id } = req.body;
+
+    if (!_id) {
         throw new ServerError({
             statusCode: 400,
             message: MESSAGES.USER_ID_NOT_PROVIDED,
         });
     }
-    const user: UserDocument = await User.findOne({ id: id });
-    if (!user)
+
+    let user: UserDocument;
+    try {
+        user = await User.findOne({ _id: _id });
+    } catch (err) {
         throw new ServerError({
             statusCode: 400,
             message: MESSAGES.USER_ID_NOT_FOUND,
         });
+    }
+    if (!user) {
+        throw new ServerError({
+            statusCode: 400,
+            message: MESSAGES.USER_ID_NOT_FOUND,
+        });
+    }
+
     res.status(200).json({ user: user });
 };

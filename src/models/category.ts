@@ -2,11 +2,12 @@ import mongoose from 'mongoose';
 
 import db from '../mongodb.config';
 const instance = db.instance;
+import { UserDocument } from './user';
 
 export interface ICategory {
     name: string;
     description?: string;
-    user: string; // _id field of user
+    user: UserDocument['_id'];
     createdOn?: Date;
     updatedOn?: Date;
 }

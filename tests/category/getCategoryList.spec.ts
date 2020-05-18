@@ -45,7 +45,7 @@ describe('/getCategoryList', () => {
         const cookie0 = registerRes0.header['set-cookie'];
 
         {
-            const newCategory: ICategory = { ...categories[0], user: userId0 };
+            const newCategory: ICategory = categories[0];
             const categoryRes = await agent
                 .post('/createCategory')
                 .set('Cookie', cookie0)
@@ -54,7 +54,7 @@ describe('/getCategoryList', () => {
         }
 
         {
-            const newCategory: ICategory = { ...categories[1], user: userId0 };
+            const newCategory: ICategory = categories[1];
             const categoryRes = await agent
                 .post('/createCategory')
                 .set('Cookie', cookie0)
@@ -71,7 +71,7 @@ describe('/getCategoryList', () => {
         const cookie1 = registerRes1.header['set-cookie'];
 
         {
-            const newCategory: ICategory = { ...categories[0], user: userId1 };
+            const newCategory: ICategory = categories[0];
             const categoryRes = await agent
                 .post('/createCategory')
                 .set('Cookie', cookie1)

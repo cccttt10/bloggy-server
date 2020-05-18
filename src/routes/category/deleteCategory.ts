@@ -1,20 +1,12 @@
 import { Response } from 'express';
 import { AugmentedRequest } from 'global';
-import { ObjectId } from 'mongodb';
 
 import { Category, ICategory } from '../../models/category';
 import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 export default async (req: AugmentedRequest, res: Response): Promise<void> => {
-    const { user, name }: ICategory = req.body;
-
-    if (!user) {
-        throw new ServerError({
-            statusCode: 400,
-            message: MESSAGES.USER_ID_NOT_PROVIDED,
-        });
-    }
+    const { name }: ICategory = req.body;
 
     if (!name) {
         throw new ServerError({
@@ -23,16 +15,9 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         });
     }
 
-    if ((req.verifiedUser._id as ObjectId).toHexString() !== user) {
-        throw new ServerError({
-            statusCode: 401,
-            message: MESSAGES.UNAUTHORIZED,
-        });
-    }
-
     const categoryAlreadyExists: boolean = await Category.exists({
         name: name,
-        user: user,
+        user: req.verifiedUser._id,
     });
     if (!categoryAlreadyExists) {
         throw new ServerError({
@@ -41,6 +26,6 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         });
     }
 
-    await Category.deleteOne({ name: name, user: user });
+    await Category.deleteOne({ name: name, user: req.verifiedUser._id });
     res.sendStatus(202);
 };

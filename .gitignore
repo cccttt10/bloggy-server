@@ -2,5 +2,5 @@ node_modules/
 build/
 config.env
 .env
-│*.icloud
+*.icloud
 .DS_Store

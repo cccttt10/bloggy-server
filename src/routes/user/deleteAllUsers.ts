@@ -4,5 +4,5 @@ import { User } from '../../models/user';
 
 export default async (req: Request, res: Response): Promise<void> => {
     await User.deleteMany({});
-    res.sendStatus(202);
+    res.sendStatus(204);
 };

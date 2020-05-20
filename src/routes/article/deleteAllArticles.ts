@@ -4,5 +4,5 @@ import { Article } from '../../models/article';
 
 export default async (req: Request, res: Response): Promise<void> => {
     await Article.deleteMany({});
-    res.sendStatus(202);
+    res.sendStatus(204);
 };

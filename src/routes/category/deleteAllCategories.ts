@@ -4,5 +4,5 @@ import { Category } from '../../models/category';
 
 export default async (req: Request, res: Response): Promise<void> => {
     await Category.deleteMany({});
-    res.sendStatus(202);
+    res.sendStatus(204);
 };

@@ -18,12 +18,12 @@ describe('/createCategory', () => {
         let res = await agent.post('/deleteAllUsers').send({
             sudoSecret: process.env.SUDO_SECRET,
         });
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
 
         res = await agent.post('/deleteAllCategories').send({
             sudoSecret: process.env.SUDO_SECRET,
         });
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
     };
 
     beforeEach(() => {

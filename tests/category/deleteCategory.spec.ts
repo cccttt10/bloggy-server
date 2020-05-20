@@ -18,12 +18,12 @@ describe('/deleteCategory', () => {
         let res = await agent.post('/deleteAllUsers').send({
             sudoSecret: process.env.SUDO_SECRET,
         });
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
 
         res = await agent.post('/deleteAllCategories').send({
             sudoSecret: process.env.SUDO_SECRET,
         });
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
     };
 
     beforeEach(() => {
@@ -60,7 +60,7 @@ describe('/deleteCategory', () => {
             .post('/deleteCategory')
             .set('Cookie', cookie)
             .send({ name: categories[0].name });
-        expect(deleteRes.status).to.equal(202);
+        expect(deleteRes.status).to.equal(204);
 
         const categoryListResAfter = await agent
             .post('/getCategoryList')

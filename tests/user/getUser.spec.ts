@@ -16,7 +16,7 @@ describe('/getUser', () => {
         const res = await agent.post('/deleteAllUsers').send({
             sudoSecret: process.env.SUDO_SECRET,
         });
-        expect(res.status).to.equal(202);
+        expect(res.status).to.equal(204);
     };
 
     beforeEach(() => {

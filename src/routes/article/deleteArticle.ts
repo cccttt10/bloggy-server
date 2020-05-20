@@ -16,5 +16,5 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     await Article.deleteOne({ _id });
-    res.sendStatus(202);
+    res.sendStatus(204);
 };

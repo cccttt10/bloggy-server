@@ -27,5 +27,5 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     await Category.deleteOne({ name: name, user: req.verifiedUser._id });
-    res.sendStatus(202);
+    res.sendStatus(204);
 };

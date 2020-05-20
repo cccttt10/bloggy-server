@@ -5,26 +5,25 @@ const instance = db.instance;
 
 import { CategoryDocument } from './category';
 import { CommentDocument } from './comment';
-import { TagDocument } from './tag';
 import { UserDocument } from './user';
 
 export interface IArticle {
     title?: string;
-    author: UserDocument['_id'];
+    author: UserDocument['_id'] | UserDocument;
     description?: string;
     content?: string;
     wordCount?: number;
     imgUrl?: string;
     isDraft?: boolean;
-    tags?: Array<TagDocument['_id']>;
-    comments?: Array<CommentDocument['_id']>;
-    categories?: Array<CategoryDocument['_id']>;
-    likedBy?: Array<UserDocument['_id']>;
+    comments?: Array<CommentDocument['_id']> | CommentDocument[];
+    categories?: Array<CategoryDocument['_id']> | CategoryDocument[];
+    likedBy?: Array<UserDocument['_id']> | UserDocument[];
     meta?: {
         numViews: number;
         numLikes: number;
         numComments: number;
     };
+    isAboutPage?: boolean;
     createdOn?: Date;
     updatedOn?: Date;
 }
@@ -39,7 +38,6 @@ const articleSchema = new instance.Schema({
     wordCount: { type: Number, default: 0 },
     imgUrl: { type: String, default: 'https://s1.ax1x.com/2020/05/15/YDzq7d.jpg' },
     isDraft: { type: Boolean, default: true },
-    tags: [{ type: instance.Schema.Types.ObjectId, ref: 'Tag' }],
     comments: [{ type: instance.Schema.Types.ObjectId, ref: 'Comment' }],
     categories: [{ type: instance.Schema.Types.ObjectId, ref: 'Category' }],
     likedBy: [
@@ -53,6 +51,7 @@ const articleSchema = new instance.Schema({
         numLikes: { type: Number, default: 0 },
         numComments: { type: Number, default: 0 },
     },
+    isAboutPage: { type: Boolean, default: false },
     createdOn: { type: Date, default: Date.now },
     updatedOn: { type: Date, default: Date.now },
 });

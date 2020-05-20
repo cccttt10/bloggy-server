@@ -7,7 +7,7 @@ import { UserDocument } from './user';
 export interface ICategory {
     name: string;
     description?: string;
-    user: UserDocument['_id'];
+    user: UserDocument['_id'] | UserDocument;
     createdOn?: Date;
     updatedOn?: Date;
 }

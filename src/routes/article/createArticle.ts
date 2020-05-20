@@ -16,7 +16,6 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
             : 0;
     const imgUrl = req.body.imgUrl ? req.body.imgUrl : '';
     const isDraft = req.body.isDraft ? req.body.isDraft : true;
-    const tags = req.body.tags ? req.body.tags : [];
     const categories = req.body.categories ? req.body.categories : [];
     const articleInfo: IArticle = {
         title,
@@ -26,7 +25,6 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         wordCount,
         imgUrl,
         isDraft,
-        tags,
         categories,
     };
     const newArticle: ArticleDocument = await new Article(articleInfo).save();

@@ -78,51 +78,33 @@ export const normalizePort = (val: number | string): number | string | false => 
 };
 
 export const stdout = {
-    error: (message: string): void => {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG === 'debug'
-        ) {
+    error: (message: string, debug = false): void => {
+        if (process.env.NODE_ENV === 'development' || debug) {
             consola.error(message);
         }
     },
-    info: (message: string): void => {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG === 'debug'
-        ) {
+    info: (message: string, debug = false): void => {
+        if (process.env.NODE_ENV === 'development' || debug) {
             consola.info(message);
         }
     },
-    log: (message: string): void => {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG === 'debug'
-        ) {
+    log: (message: string, debug = false): void => {
+        if (process.env.NODE_ENV === 'development' || debug) {
             consola.log(message);
         }
     },
-    ready: (message: string): void => {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG === 'debug'
-        ) {
+    ready: (message: string, debug = false): void => {
+        if (process.env.NODE_ENV === 'development' || debug) {
             consola.ready(message);
         }
     },
-    success: (message: string): void => {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG === 'debug'
-        ) {
+    success: (message: string, debug = false): void => {
+        if (process.env.NODE_ENV === 'development' || debug) {
             consola.success(message);
         }
     },
-    warn: (message: string): void => {
-        if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.DEBUG === 'debug'
-        ) {
+    warn: (message: string, debug = false): void => {
+        if (process.env.NODE_ENV === 'development' || debug) {
             consola.warn(message);
         }
     },

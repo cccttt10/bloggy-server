@@ -1,43 +1,34 @@
-// import { Response } from 'express';
-// import { AugmentedRequest } from 'global';
-// import { ObjectId } from 'mongodb';
+import { Response } from 'express';
+import { AugmentedRequest } from 'global';
 
-// import { Article, ArticleDocument, IArticle } from '../../models/article';
-// import { MESSAGES } from '../../util/constants';
-// import { ServerError } from '../../util/util';
+import { Article, ArticleDocument, IArticle } from '../../models/article';
 
-// export default async (req: AugmentedRequest, res: Response): Promise<void> => {
-//     const { name, description, user, createdOn, updatedOn }: ICategory = req.body;
-
-//     if ((req.verifiedUser._id as ObjectId).toHexString() !== user) {
-//         throw new ServerError({
-//             statusCode: 401,
-//             message: MESSAGES.UNAUTHORIZED,
-//         });
-//     }
-
-//     const categoryAlreadyExists: boolean = await Category.exists({
-//         name: name,
-//         user: user,
-//     });
-//     if (categoryAlreadyExists) {
-//         throw new ServerError({
-//             statusCode: 400,
-//             message: MESSAGES.DUPLICATE_CATEGORY,
-//         });
-//     }
-
-//     const categoryInfo: ICategory = {
-//         name,
-//         description,
-//         user,
-//         createdOn,
-//         updatedOn,
-//     };
-//     await new Category(categoryInfo).save();
-//     const newCategory: CategoryDocument = await Category.findOne({
-//         name: name,
-//         user: user,
-//     });
-//     res.status(201).json({ category: newCategory });
-// };
+export default async (req: AugmentedRequest, res: Response): Promise<void> => {
+    const title = req.body.title ? req.body.title : 'Untitled Blog';
+    const author = req.verifiedUser._id;
+    const description = req.body.description
+        ? req.body.description
+        : 'This is a blog post.';
+    const content = req.body.content ? req.body.content : 'No content yet.';
+    const wordCount =
+        req.body.content && typeof req.body.content === 'string'
+            ? req.body.content.length
+            : 0;
+    const imgUrl = req.body.imgUrl ? req.body.imgUrl : '';
+    const isDraft = req.body.isDraft ? req.body.isDraft : true;
+    const tags = req.body.tags ? req.body.tags : [];
+    const categories = req.body.categories ? req.body.categories : [];
+    const articleInfo: IArticle = {
+        title,
+        author,
+        description,
+        content,
+        wordCount,
+        imgUrl,
+        isDraft,
+        tags,
+        categories,
+    };
+    const newArticle: ArticleDocument = await new Article(articleInfo).save();
+    res.status(201).json({ article: newArticle });
+};

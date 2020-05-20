@@ -6,7 +6,7 @@ import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 export default async (req: AugmentedRequest, res: Response): Promise<void> => {
-    const { name, description, createdOn, updatedOn }: ICategory = req.body;
+    const { name, description }: ICategory = req.body;
 
     const categoryAlreadyExists: boolean = await Category.exists({
         name: name,
@@ -23,8 +23,6 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         name,
         description,
         user: req.verifiedUser._id,
-        createdOn,
-        updatedOn,
     };
     await new Category(categoryInfo).save();
     const newCategory: CategoryDocument = await Category.findOne({

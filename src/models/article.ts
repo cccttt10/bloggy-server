@@ -9,24 +9,24 @@ import { TagDocument } from './tag';
 import { UserDocument } from './user';
 
 export interface IArticle {
-    title: string;
+    title?: string;
     author: UserDocument['_id'];
-    description: string;
-    content: string;
-    wordCount: number;
-    imgUrl: string;
-    isDraft: boolean;
-    tags: Array<TagDocument['_id']>;
-    comments: Array<CommentDocument['_id']>;
-    categories: Array<CategoryDocument['_id']>;
-    likedBy: Array<UserDocument['_id']>;
-    meta: {
+    description?: string;
+    content?: string;
+    wordCount?: number;
+    imgUrl?: string;
+    isDraft?: boolean;
+    tags?: Array<TagDocument['_id']>;
+    comments?: Array<CommentDocument['_id']>;
+    categories?: Array<CategoryDocument['_id']>;
+    likedBy?: Array<UserDocument['_id']>;
+    meta?: {
         numViews: number;
         numLikes: number;
         numComments: number;
     };
-    createdOn: Date;
-    updatedOn: Date;
+    createdOn?: Date;
+    updatedOn?: Date;
 }
 
 export type ArticleDocument = mongoose.Document & IArticle;

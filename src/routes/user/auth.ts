@@ -93,3 +93,19 @@ export const verifyUser = tryAsync(
         next();
     }
 );
+
+export const verifySudo = tryAsync(
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await new Promise(resolve => resolve()); // to comply with Promise<void> return type
+        if (
+            !req.body.sudoSecret ||
+            req.body.sudoSecret !== process.env.SUDO_SECRET
+        ) {
+            throw new ServerError({
+                message: MESSAGES.SUDO_ACCESS_ONLY,
+                statusCode: 401,
+            });
+        }
+        next();
+    }
+);

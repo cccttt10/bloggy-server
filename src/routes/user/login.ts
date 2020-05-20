@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User, UserDocument } from '../../models/user';
 import { MESSAGES } from '../../util/constants';
 import { md5, MD5_SUFFIX, ServerError } from '../../util/util';
-import { sendToken } from './token';
+import { sendToken } from './auth';
 
 export default async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;

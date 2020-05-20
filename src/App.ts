@@ -41,6 +41,11 @@ export default class App {
         this.app.use(cookieParser());
 
         /*
+        print out request details if debug flag is enabled
+        */
+        this.app.use(stdout.printIncomingRequest);
+
+        /*
         connect to db
         */
         db.connect();

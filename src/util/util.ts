@@ -1,6 +1,8 @@
+import colors from 'colors';
 import consola from 'consola';
 import crypto from 'crypto';
 import { NextFunction, Request, Response } from 'express';
+import request from 'supertest';
 
 import { MESSAGES } from './constants';
 
@@ -107,5 +109,42 @@ export const stdout = {
         if (process.env.NODE_ENV === 'development' || debug) {
             consola.warn(message);
         }
+    },
+
+    printIncomingRequest: (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): void => {
+        if (req.body.debug === true) {
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan(`Request method: ${req.method}`));
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan('Request header: '));
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan(JSON.stringify(req.headers, undefined, 4)));
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan('Request body: '));
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan(JSON.stringify(req.body, undefined, 4)));
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan('Request cookies:'));
+            // eslint-disable-next-line no-console
+            console.log(colors.cyan(JSON.stringify(req.cookies, undefined, 4)));
+        }
+        next();
+    },
+
+    printResponse: (res: request.Response): void => {
+        // eslint-disable-next-line no-console
+        console.log(colors.green(`Response status: ${res.status}`));
+        // eslint-disable-next-line no-console
+        console.log(colors.green('Response header:'));
+        // eslint-disable-next-line no-console
+        console.log(colors.green(JSON.stringify(res.header, undefined, 4)));
+        // eslint-disable-next-line no-console
+        console.log(colors.green('Response body: '));
+        // eslint-disable-next-line no-console
+        console.log(colors.green(JSON.stringify(res.body, undefined, 4)));
     },
 };

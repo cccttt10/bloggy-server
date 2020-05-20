@@ -1,6 +1,7 @@
 {
     "author": "Chuntong Gao, Bolin Wang, Yang Song, Hongkaiyue Zhou",
     "dependencies": {
+        "colors": "^1.4.0",
         "consola": "^2.12.1",
         "cookie-parser": "~1.4.3",
         "crypto": "^1.0.1",
@@ -20,6 +21,7 @@
         "@istanbuljs/nyc-config-typescript": "^1.0.1",
         "@types/chai": "^4.2.11",
         "@types/chai-arrays": "^1.0.3",
+        "@types/colors": "^1.2.1",
         "@types/consola": "^2.2.5",
         "@types/cookie-parser": "^1.4.2",
         "@types/express": "^4.17.6",

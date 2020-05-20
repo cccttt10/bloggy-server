@@ -10,6 +10,7 @@ import App from '../../src/App';
 import { ICategory } from '../../src/models/category';
 import { MESSAGES } from '../../src/util/constants';
 import { TEST_SERVER_URL } from '../../src/util/constants';
+import { stdout } from '../../src/util/util';
 import categories from '../test-data/categories';
 import users from '../test-data/users';
 
@@ -55,13 +56,14 @@ describe('/createCategory', () => {
             const categoryRes = await agent
                 .post('/createCategory')
                 .set('Cookie', cookie)
-                .send(newCategory);
+                .send({ ...newCategory, debug: true });
             expect(categoryRes.body).to.have.property('category');
             expect(categoryRes.body.category.name).to.equal(newCategory.name);
             expect(categoryRes.body.category.description).to.equal(
                 newCategory.description
             );
             expect(categoryRes.status).to.equal(201);
+            stdout.printResponse(categoryRes);
         }
 
         {

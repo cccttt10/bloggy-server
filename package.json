@@ -1,8 +1,6 @@
 {
     "author": "Chuntong Gao, Bolin Wang, Yang Song, Hongkaiyue Zhou",
     "dependencies": {
-        "babel-preset-env": "^1.7.0",
-        "babel-register": "^6.26.0",
         "consola": "^2.12.1",
         "cookie-parser": "~1.4.3",
         "crypto": "^1.0.1",
@@ -19,6 +17,7 @@
     },
     "description": "server code for our blog project",
     "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.1",
         "@types/chai": "^4.2.11",
         "@types/chai-arrays": "^1.0.3",
         "@types/consola": "^2.2.5",
@@ -26,7 +25,7 @@
         "@types/express": "^4.17.6",
         "@types/http-errors": "^1.6.3",
         "@types/jsonwebtoken": "^8.5.0",
-        "@types/mocha": "^7.0.2",
+        "@types/mocha": "2.2.46",
         "@types/mongodb": "^3.5.17",
         "@types/mongoose": "^5.7.19",
         "@types/mongoose-auto-increment": "^5.0.33",
@@ -43,26 +42,29 @@
         "eslint-plugin-simple-import-sort": "^5.0.3",
         "husky": "^4.2.3",
         "lint-staged": "9.4.3",
-        "mocha": "^7.1.2",
+        "mocha": "4.1.0",
+        "nyc": "11.3.0",
         "prettier": "^2.0.4",
         "source-map-support": "^0.5.19",
         "supertest": "^4.0.2",
+        "ts-node": "4.1.0",
         "typescript": "^3.9.2"
     },
     "license": "ISC",
     "name": "blog-server",
     "scripts": {
-        "build": "rm -rf build/ && npm run check && npm run tsc-build",
+        "build": "bash tsc-clean.sh && npm run check && npm run tsc-build",
         "check": "npm run prettier-check && npm run eslint-check && npm run tsc-check",
-        "eslint-check": "eslint --no-error-on-unmatched-pattern src/** tests/** --ext .js --ext .ts",
-        "eslint-fix": "eslint --no-error-on-unmatched-pattern src/** tests/** --ext .js --ext .ts --fix",
+        "eslint-check": "eslint --no-error-on-unmatched-pattern src/**/*.ts test/**/*.ts --ext .ts",
+        "eslint-fix": "eslint --no-error-on-unmatched-pattern src/**/*.ts test/**/*.ts --ext .ts --fix",
         "fix": "npm run prettier-fix && npm run eslint-fix",
-        "prettier-check": "prettier --config ./.prettierrc.json --check \"./src/**/*.{js,ts}\" \"./tests/**/*.{js,ts}\"",
-        "prettier-fix": "prettier --config ./.prettierrc.json --write \"./src/**/*.{js,ts}\" \"./tests/**/*.{js,ts}\"",
-        "start-dev": "node -r source-map-support/register build/src/index.js --no-deprecation --no-warning",
+        "prettier-check": "prettier --config ./.prettierrc.json --check \"./src/**/*.ts\" \"./test/**/*.ts\"",
+        "prettier-fix": "prettier --config ./.prettierrc.json --write \"./src/**/*.ts\" \"./test/**/*.ts\"",
+        "start-dev": "NODE_ENV=development node -r source-map-support/register ./src/index.js --no-deprecation --no-warning",
+        "test": "mocha --require test/mocha.env.ts --require ts-node/register --require source-map-support/register --recursive --exit",
+        "test-cover": "nyc npm run test",
         "tsc-build": "tsc --listEmittedFiles",
-        "tsc-check": "tsc --noEmit --listEmittedFiles",
-        "test": "mocha 'build/tests/**/*.spec.js' --require tests/mocha.env.js --require source-map-support/register"
+        "tsc-check": "tsc --noEmit --listEmittedFiles"
     },
     "version": "1.0.0"
 }

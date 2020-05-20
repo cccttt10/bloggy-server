@@ -4,3 +4,8 @@ config.env
 .env
 *.icloud
 .DS_Store
+.nyc_output/
+src/**/*.js
+src/**/*.map
+test/**/*.js
+test/**/*.map

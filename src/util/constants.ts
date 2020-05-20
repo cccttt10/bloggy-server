@@ -1,3 +1,8 @@
+/*
+load environment variables
+*/
+require('dotenv').config();
+
 export const MESSAGES = {
     ARTICLE_ID_NOT_PROVIDED: 'Please provide article id.',
     ARTICLE_ID_NOT_FOUND: 'Article id does not exist.',
@@ -18,3 +23,11 @@ export const MESSAGES = {
     USER_ID_NOT_PROVIDED: 'Please provide user id.',
     WRONG_CREDENTIALS: 'Email or password is wrong.',
 };
+
+export const MONGODB = {
+    uri: `mongodb+srv://chuntonggao:${process.env.DB_PASSWORD}@cluster0-i4fbo.mongodb.net/test?retryWrites=true&w=majority`,
+};
+
+export const TEST_SERVER_URL = 'http://localhost:3300';
+
+export const DEFAULT_PORT = 3300;

@@ -8,13 +8,25 @@ import assertArrays from 'chai-arrays';
 chai.use(assertArrays);
 import request, { SuperTest, Test } from 'supertest';
 
+import App from '../../src/App';
 import { ICategory } from '../../src/models/category';
 import { MESSAGES } from '../../src/util/constants';
+import { TEST_SERVER_URL } from '../../src/util/constants';
 import categories from '../test-data/categories';
 import users from '../test-data/users';
 
 describe('/getCategoryList', () => {
+    let app: App;
     let agent: SuperTest<Test>;
+
+    before(() => {
+        app = new App();
+        app.start();
+    });
+
+    after(() => {
+        app.stop();
+    });
 
     const cleanup = async (): Promise<void> => {
         let res = await agent.post('/deleteAllUsers').send({
@@ -29,7 +41,7 @@ describe('/getCategoryList', () => {
     };
 
     beforeEach(() => {
-        agent = request('http://localhost:3300');
+        agent = request(TEST_SERVER_URL);
         cleanup();
     });
 

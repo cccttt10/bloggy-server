@@ -6,13 +6,25 @@ require('dotenv').config();
 import { expect } from 'chai';
 import request, { SuperTest, Test } from 'supertest';
 
+import App from '../../src/App';
 import { MESSAGES } from '../../src/util/constants';
+import { TEST_SERVER_URL } from '../../src/util/constants';
 
 describe('/deleteAllCategories', () => {
+    let app: App;
     let agent: SuperTest<Test>;
 
+    before(() => {
+        app = new App();
+        app.start();
+    });
+
+    after(() => {
+        app.stop();
+    });
+
     beforeEach(() => {
-        agent = request('http://localhost:3300');
+        agent = request(TEST_SERVER_URL);
     });
 
     it('should delete all categories if sudo secret is provided', async () => {

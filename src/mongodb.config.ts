@@ -1,8 +1,8 @@
-import consola from 'consola';
 import mongoose, { Mongoose } from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
 
-import * as CONFIG from './app.config.js';
+import { stdout } from '../src/util/util';
+import * as CONFIG from './util/constants';
 
 /*
 remove deprecation warnings
@@ -25,13 +25,13 @@ const connect = (): Mongoose => {
 
     // connection failed
     mongoose.connection.on('error', err => {
-        consola.error('db connection failed!');
-        consola.log(err);
+        stdout.error('db connection failed!');
+        stdout.log(err.toString());
     });
 
     // connection successful
     mongoose.connection.once('open', () => {
-        consola.ready('db connection successful!');
+        stdout.ready('db connection successful!');
     });
 
     // initialize auto-incrementing id

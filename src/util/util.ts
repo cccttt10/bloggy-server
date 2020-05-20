@@ -57,3 +57,73 @@ export const tryAsync = (asyncFn: AsyncFunc): WrappedFunc => {
         });
     };
 };
+
+/*
+normalize port into number, string or false
+*/
+export const normalizePort = (val: number | string): number | string | false => {
+    const port = parseInt(val as string, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val as string;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port as number;
+    }
+
+    return false;
+};
+
+export const stdout = {
+    error: (message: string): void => {
+        if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.DEBUG === 'debug'
+        ) {
+            consola.error(message);
+        }
+    },
+    info: (message: string): void => {
+        if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.DEBUG === 'debug'
+        ) {
+            consola.info(message);
+        }
+    },
+    log: (message: string): void => {
+        if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.DEBUG === 'debug'
+        ) {
+            consola.log(message);
+        }
+    },
+    ready: (message: string): void => {
+        if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.DEBUG === 'debug'
+        ) {
+            consola.ready(message);
+        }
+    },
+    success: (message: string): void => {
+        if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.DEBUG === 'debug'
+        ) {
+            consola.success(message);
+        }
+    },
+    warn: (message: string): void => {
+        if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.DEBUG === 'debug'
+        ) {
+            consola.warn(message);
+        }
+    },
+};

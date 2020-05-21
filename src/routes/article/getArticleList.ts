@@ -33,5 +33,5 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     const articles: ArticleDocument[] = await Article.find({ author: user });
-    res.status(200).json({ count: articles.length, articles: articles });
+    res.status(200).json({ count: articles.length, articleList: articles });
 };

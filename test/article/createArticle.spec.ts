@@ -50,7 +50,7 @@ describe('/createArticle', () => {
 
     afterEach(cleanup);
 
-    it('should allow a register user to create an article', async () => {
+    it('should allow a registered user to create an article', async () => {
         const registerRes = await agent.post('/register').send(users[0]);
         expect(registerRes.status).to.equal(201);
 

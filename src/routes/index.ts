@@ -8,6 +8,7 @@ import user from './user/index';
 const setUpRoutes = (app: Express): void => {
     app.post('/createArticle', verifyUser, article.createArticle);
     app.post('/deleteAllArticles', verifySudo, article.deleteAllArticles);
+    app.post('/deleteArticle', verifyUser, article.deleteArticle);
     app.post('/getArticle', article.getArticle);
     app.post('/getArticleList', article.getArticleList);
     app.post('/likeArticle', verifyUser, article.likeArticle);

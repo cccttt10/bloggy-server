@@ -133,10 +133,9 @@ describe('/deleteCategory', () => {
         expect(registerRes.body.user).to.have.property('_id');
         expect(registerRes.status).to.equal(201);
 
-        const userId = registerRes.body.user['_id'];
         const cookie = registerRes.header['set-cookie'];
 
-        const newCategory: ICategory = { ...categories[0], user: userId };
+        const newCategory: ICategory = categories[0];
         const categoryRes = await agent
             .post('/createCategory')
             .set('Cookie', cookie)
@@ -145,7 +144,7 @@ describe('/deleteCategory', () => {
 
         const deleteRes = await agent
             .post('/deleteCategory')
-            .send({ name: categories[0].name, user: userId });
+            .send({ name: categories[0].name });
         expect(deleteRes.status).to.equal(401);
         expect(deleteRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
     });

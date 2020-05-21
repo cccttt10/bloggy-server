@@ -89,12 +89,9 @@ export default class App {
         });
     }
 
-    stop(exitProcess?: boolean): void {
+    stop(): void {
         this.server.close(() => {
             stdout.info('Server will stop.');
-            if (exitProcess === true) {
-                process.exit(0);
-            }
         });
     }
 }

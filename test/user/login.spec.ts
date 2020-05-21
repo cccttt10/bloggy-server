@@ -10,6 +10,7 @@ import request, { SuperTest, Test } from 'supertest';
 import App from '../../src/App';
 import { MESSAGES } from '../../src/util/constants';
 import { TEST_SERVER_URL } from '../../src/util/constants';
+import { stdout } from '../../src/util/util';
 import users from '../test-data/users';
 
 describe('/login', () => {
@@ -46,6 +47,7 @@ describe('/login', () => {
         res = await agent.post('/login').send({
             email: users[0].email,
             password: users[0].password,
+            debug: true,
         });
         expect(res.header).to.have.property('set-cookie');
         const cookie = setCookie.parse(res.header['set-cookie'], {
@@ -55,6 +57,7 @@ describe('/login', () => {
         expect(res.body).to.have.property('user');
         expect(res.body.user).to.not.have.property('password');
         expect(res.status).to.equal(200);
+        stdout.printResponse(res);
     });
 
     it('should return 400 if email exists but password is wrong', async () => {

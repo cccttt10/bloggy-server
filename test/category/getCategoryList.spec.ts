@@ -12,6 +12,7 @@ import App from '../../src/App';
 import { ICategory } from '../../src/models/category';
 import { MESSAGES } from '../../src/util/constants';
 import { TEST_SERVER_URL } from '../../src/util/constants';
+import { stdout } from '../../src/util/util';
 import categories from '../test-data/categories';
 import users from '../test-data/users';
 
@@ -93,11 +94,12 @@ describe('/getCategoryList', () => {
 
         const categoryRes0 = await agent
             .post('/getCategoryList')
-            .send({ user: userId0 });
+            .send({ user: userId0, debug: true });
         expect(categoryRes0.status).to.equal(200);
         expect(categoryRes0.body).to.have.property('categoryList');
         expect(categoryRes0.body.categoryList).to.be.array();
         expect(categoryRes0.body.categoryList).to.be.ofSize(2);
+        stdout.printResponse(categoryRes0);
 
         const categoryRes1 = await agent
             .post('/getCategoryList')

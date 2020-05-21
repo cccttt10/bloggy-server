@@ -10,6 +10,7 @@ import App from '../../src/App';
 import { ICategory } from '../../src/models/category';
 import { MESSAGES } from '../../src/util/constants';
 import { TEST_SERVER_URL } from '../../src/util/constants';
+import { stdout } from '../../src/util/util';
 import categories from '../test-data/categories';
 import users from '../test-data/users';
 
@@ -71,8 +72,9 @@ describe('/deleteCategory', () => {
         const deleteRes = await agent
             .post('/deleteCategory')
             .set('Cookie', cookie)
-            .send({ name: categories[0].name });
+            .send({ name: categories[0].name, debug: true });
         expect(deleteRes.status).to.equal(204);
+        stdout.printResponse(deleteRes);
 
         const categoryListResAfter = await agent
             .post('/getCategoryList')

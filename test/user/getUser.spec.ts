@@ -9,6 +9,7 @@ import request, { SuperTest, Test } from 'supertest';
 import App from '../../src/App';
 import { MESSAGES } from '../../src/util/constants';
 import { TEST_SERVER_URL } from '../../src/util/constants';
+import { stdout } from '../../src/util/util';
 import users from '../test-data/users';
 
 describe('/getUser', () => {
@@ -45,11 +46,12 @@ describe('/getUser', () => {
 
         const user = res.body.user;
 
-        res = await agent.post('/getUser').send({ _id: user._id });
+        res = await agent.post('/getUser').send({ _id: user._id, debug: true });
         expect(res.body).to.have.property('user');
         expect(res.body.user).to.deep.equal(user);
         expect(res.body.user).to.not.have.property('password');
         expect(res.status).to.equal(200);
+        stdout.printResponse(res);
     });
 
     it('should return 400 if user id is not provided', async () => {

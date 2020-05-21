@@ -10,6 +10,7 @@ import request, { SuperTest, Test } from 'supertest';
 import App from '../../src/App';
 import { MESSAGES } from '../../src/util/constants';
 import { TEST_SERVER_URL } from '../../src/util/constants';
+import { stdout } from '../../src/util/util';
 import users from '../test-data/users';
 
 describe('/register', () => {
@@ -38,6 +39,19 @@ describe('/register', () => {
     });
 
     afterEach(cleanup);
+
+    it('should register a new user and give token upon registration', async () => {
+        const res = await agent.post('/register').send({ ...users[0], debug: true });
+        expect(res.header).to.have.property('set-cookie');
+        const cookie = setCookie.parse(res.header['set-cookie'], {
+            map: true,
+        });
+        expect(cookie.jwt.value).to.not.equal('');
+        expect(res.body).to.have.property('user');
+        expect(res.body.user).to.not.have.property('password');
+        expect(res.status).to.equal(201);
+        stdout.printResponse(res);
+    });
 
     it('should return 400 if name is not provided', async () => {
         const res = await agent.post('/register').send({
@@ -82,18 +96,6 @@ describe('/register', () => {
         });
         expect(res.body.message).to.equal(MESSAGES.INVALID_EMAIL);
         expect(res.status).to.equal(400);
-    });
-
-    it('should register a new user and give token upon registration', async () => {
-        const res = await agent.post('/register').send(users[0]);
-        expect(res.header).to.have.property('set-cookie');
-        const cookie = setCookie.parse(res.header['set-cookie'], {
-            map: true,
-        });
-        expect(cookie.jwt.value).to.not.equal('');
-        expect(res.body).to.have.property('user');
-        expect(res.body.user).to.not.have.property('password');
-        expect(res.status).to.equal(201);
     });
 
     it('should return 400 if email is already registered', async () => {

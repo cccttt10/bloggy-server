@@ -44,10 +44,7 @@ export default async (req: Request, res: Response): Promise<void> => {
             });
         }
         article.meta.numViews = article.meta.numViews + 1;
-    }
-    await Article.updateOne({ _id }, { meta: article.meta });
-
-    if (isVisitor === true) {
+        await Article.updateOne({ _id }, { $inc: { 'meta.numViews': 1 } });
         article.comments = article.comments.filter(
             (comment: CommentDocument): boolean => {
                 return comment.isApproved === true;

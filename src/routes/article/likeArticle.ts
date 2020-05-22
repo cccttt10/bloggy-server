@@ -1,10 +1,11 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { AugmentedRequest } from 'global';
 
 import { Article, ArticleDocument } from '../../models/article';
 import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
-export default async (req: Request, res: Response): Promise<void> => {
+export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     const { _id } = req.body;
 
     if (!_id) {
@@ -30,12 +31,19 @@ export default async (req: Request, res: Response): Promise<void> => {
         });
     }
 
-    const article: ArticleDocument = await Article.findById(_id);
-    article.meta.numLikes = article.meta.numLikes + 1;
-    const updateArticle: ArticleDocument = await Article.updateOne(
+    const alreadyLiked: boolean = await Article.exists({
+        _id,
+        likedBy: req.verifiedUser._id,
+    });
+    if (alreadyLiked === true) {
+        throw new ServerError({ statusCode: 400, message: MESSAGES.ALREADY_LIKED });
+    }
+
+    await Article.updateOne(
         { _id },
-        { meta: article.meta }
+        { $inc: { 'meta.numLikes': 1 }, $push: { likedBy: req.verifiedUser._id } }
     );
 
-    res.status(200).json({ article: updateArticle });
+    const updatedArticle: ArticleDocument = await Article.findById(_id);
+    res.status(200).json({ article: updatedArticle });
 };

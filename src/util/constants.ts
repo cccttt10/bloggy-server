@@ -4,6 +4,7 @@ load environment variables
 require('dotenv').config();
 
 export const MESSAGES = {
+    ALREADY_LIKED: 'You already liked this article.',
     ARTICLE_ID_NOT_PROVIDED: 'Please provide article id.',
     ARTICLE_ID_NOT_FOUND: 'Article id does not exist.',
     CATEGORY_NAME_NOT_PROVIDED: 'Please provide a category name',

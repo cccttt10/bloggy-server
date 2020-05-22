@@ -6,7 +6,9 @@ import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 export default async (req: Request, res: Response): Promise<void> => {
-    const { _id, isVisitor } = req.body;
+    const { _id } = req.body;
+    const isVisitor: boolean =
+        typeof req.body.isVisitor === 'boolean' ? req.body.isVisitor : true;
 
     if (!_id) {
         throw new ServerError({
@@ -48,7 +50,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     if (isVisitor === true) {
         article.comments = article.comments.filter(
             (comment: CommentDocument): boolean => {
-                return comment.isApproved;
+                return comment.isApproved === true;
             }
         );
     }

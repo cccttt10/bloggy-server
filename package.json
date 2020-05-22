@@ -63,7 +63,7 @@
         "prettier-check": "prettier --config ./.prettierrc.json --check \"./src/**/*.ts\" \"./test/**/*.ts\"",
         "prettier-fix": "prettier --config ./.prettierrc.json --write \"./src/**/*.ts\" \"./test/**/*.ts\"",
         "start-dev": "NODE_ENV=development node -r source-map-support/register ./src/index.js --no-deprecation --no-warning",
-        "test": "mocha --require test/mocha.env.ts --require ts-node/register --require source-map-support/register --recursive --exit",
+        "test": "mocha --require test/mocha.env.ts --require ts-node/register --require source-map-support/register --recursive --exit --bail",
         "test-cover": "nyc npm run test",
         "tsc-build": "tsc --listEmittedFiles",
         "tsc-check": "tsc --noEmit --listEmittedFiles"

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 import db from '../mongodb.config';
 const instance = db.instance;
+import { Article } from './article';
 import { UserDocument } from './user';
 
 export interface ICategory {
@@ -24,6 +25,16 @@ const categorySchema = new instance.Schema({
     },
     createdOn: { type: Date, default: Date.now },
     updatedOn: { type: Date, default: Date.now },
+});
+
+categorySchema.pre('remove', async function (next: mongoose.HookNextFunction) {
+    const categoryId = this._id;
+    await Article.updateMany(
+        {},
+        { $pull: { categories: categoryId } },
+        { multi: true }
+    );
+    next();
 });
 
 export const Category = instance.model<CategoryDocument>('Category', categorySchema);

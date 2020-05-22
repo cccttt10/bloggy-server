@@ -1,22 +1,26 @@
 import { Response } from 'express';
 import { AugmentedRequest } from 'global';
+import { ObjectId } from 'mongodb';
 
 import { Article, ArticleDocument, IArticle } from '../../models/article';
 
 export default async (req: AugmentedRequest, res: Response): Promise<void> => {
-    const title = req.body.title ? req.body.title : 'Untitled Blog';
-    const author = req.verifiedUser._id;
-    const description = req.body.description
+    const title: string = req.body.title ? req.body.title : 'Untitled Blog';
+    const author: ObjectId = req.verifiedUser._id;
+    const description: string = req.body.description
         ? req.body.description
         : 'This is a blog post.';
-    const content = req.body.content ? req.body.content : 'No content yet.';
-    const wordCount =
+    const content: string = req.body.content ? req.body.content : 'No content yet.';
+    const wordCount: number =
         req.body.content && typeof req.body.content === 'string'
             ? req.body.content.length
             : 0;
-    const imgUrl = req.body.imgUrl ? req.body.imgUrl : '';
-    const isDraft = req.body.isDraft ? req.body.isDraft : true;
-    const categories = req.body.categories ? req.body.categories : [];
+    const imgUrl: string = req.body.imgUrl ? req.body.imgUrl : '';
+    const isDraft: boolean =
+        typeof req.body.isDraft === 'boolean' ? req.body.isDraft : true;
+    const isAboutPage: boolean =
+        typeof req.body.isAboutPage === 'boolean' ? req.body.isDraft : true;
+    const categories: ObjectId[] = req.body.categories ? req.body.categories : [];
     const articleInfo: IArticle = {
         title,
         author,
@@ -25,6 +29,7 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         wordCount,
         imgUrl,
         isDraft,
+        isAboutPage,
         categories,
     };
     const newArticle: ArticleDocument = await new Article(articleInfo).save();

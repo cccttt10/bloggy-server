@@ -34,16 +34,18 @@ export default async (req: Request, res: Response): Promise<void> => {
     const article: ArticleDocument = await Article.findById(_id)
         .populate('comments')
         .populate('categories');
-    if (isVisitor) {
+    if (isVisitor === true) {
+        if (article.isDraft === true) {
+            throw new ServerError({
+                statusCode: 401,
+                message: MESSAGES.UNAUTHORIZED,
+            });
+        }
         article.meta.numViews = article.meta.numViews + 1;
     }
     await Article.updateOne({ _id }, { meta: article.meta });
 
-    const filterComments: boolean =
-        req.body.filterComments && typeof req.body.filterComments === 'boolean'
-            ? req.body.filterComments
-            : true;
-    if (filterComments) {
+    if (isVisitor === true) {
         article.comments = article.comments.filter(
             (comment: CommentDocument): boolean => {
                 return comment.isApproved;

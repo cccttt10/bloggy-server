@@ -166,4 +166,31 @@ describe('/getArticle', () => {
         expect(getRes2.status).to.equal(400);
         expect(getRes2.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
     });
+
+    it('should return 401 if a visitor attempts to get a draft article', async () => {
+        const registerRes = await agent.post('/register').send(users[0]);
+        expect(registerRes.status).to.equal(201);
+
+        const cookie = registerRes.header['set-cookie'];
+
+        const articleRes = await agent
+            .post('/createArticle')
+            .set('Cookie', cookie)
+            .send(articles[1]);
+        expect(articleRes.status).to.equal(201);
+        expect(articleRes.body).to.have.property('article');
+        expect(articleRes.body.article).to.have.property('_id');
+        const articleId = articleRes.body.article._id;
+
+        const getResVisitor = await agent
+            .post('/getArticle')
+            .send({ _id: articleId, isVisitor: true });
+        expect(getResVisitor.status).to.equal(401);
+        expect(getResVisitor.body.message).to.equal(MESSAGES.UNAUTHORIZED);
+
+        const getResNotVisitor = await agent
+            .post('/getArticle')
+            .send({ _id: articleId, isVisitor: false });
+        expect(getResNotVisitor.status).to.equal(200);
+    });
 });

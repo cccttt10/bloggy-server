@@ -6,7 +6,7 @@ import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 export default async (req: Request, res: Response): Promise<void> => {
-    const { _id } = req.body;
+    const { _id, isVisitor } = req.body;
 
     if (!_id) {
         throw new ServerError({
@@ -31,11 +31,12 @@ export default async (req: Request, res: Response): Promise<void> => {
         });
     }
 
-    const article: ArticleDocument = await Article.findById(_id).populate([
-        { path: 'categories' },
-        { path: 'comments' },
-    ]);
-    article.meta.numViews = article.meta.numViews + 1;
+    const article: ArticleDocument = await Article.findById(_id)
+        .populate('comments')
+        .populate('categories');
+    if (isVisitor) {
+        article.meta.numViews = article.meta.numViews + 1;
+    }
     await Article.updateOne({ _id }, { meta: article.meta });
 
     const filterComments: boolean =

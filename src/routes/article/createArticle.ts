@@ -28,5 +28,8 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         categories,
     };
     const newArticle: ArticleDocument = await new Article(articleInfo).save();
-    res.status(201).json({ article: newArticle });
+    const savedArticle: ArticleDocument = await Article.findById(newArticle._id)
+        .populate('comments')
+        .populate('categories');
+    res.status(201).json({ article: savedArticle });
 };

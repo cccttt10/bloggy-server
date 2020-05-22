@@ -61,14 +61,14 @@ describe('/createArticle', () => {
             .set('Cookie', cookie)
             .send(categories[0]);
         expect(categoryRes0.status).to.equal(201);
-        const categoryId0 = categoryRes0.body._id;
+        const categoryId0 = categoryRes0.body.category._id;
 
         const categoryRes1 = await agent
             .post('/createCategory')
             .set('Cookie', cookie)
             .send(categories[1]);
         expect(categoryRes1.status).to.equal(201);
-        const categoryId1 = categoryRes1.body._id;
+        const categoryId1 = categoryRes1.body.category._id;
 
         const articleRes = await agent
             .post('/createArticle')
@@ -80,6 +80,9 @@ describe('/createArticle', () => {
             });
         expect(articleRes.status).to.equal(201);
         expect(articleRes.body).to.have.property('article');
+        expect(articleRes.body.article).to.have.property('categories');
+        expect(articleRes.body.article.categories).to.be.array();
+        expect(articleRes.body.article.categories).to.be.ofSize(2);
         stdout.printResponse(articleRes);
     });
 

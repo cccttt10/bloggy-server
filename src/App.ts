@@ -49,6 +49,10 @@ export default class App {
         connect to db
         */
         db.connect();
+        require('./models/article');
+        require('./models/category');
+        require('./models/comment');
+        require('./models/user');
 
         /*
         configure routes

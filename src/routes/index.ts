@@ -2,6 +2,7 @@ import { Express } from 'express';
 
 import article from './article/index';
 import category from './category/index';
+import comment from './comment/index';
 import { verifySudo, verifyUser } from './user/auth';
 import user from './user/index';
 
@@ -18,6 +19,12 @@ const setUpRoutes = (app: Express): void => {
     app.post('/deleteAllCategories', verifySudo, category.deleteAllCategories);
     app.post('/deleteCategory', verifyUser, category.deleteCategory);
     app.post('/getCategoryList', category.getCategoryList);
+
+    app.post('/approveComment', verifyUser, comment.approveComment);
+    app.post('/createComment', verifyUser, comment.createComment);
+    app.post('/deleteAllComments', verifySudo, comment.deleteAllComments);
+    app.post('/deleteComment', verifyUser, comment.deleteComment);
+    app.post('/getCommentList', comment.getCommentList);
 
     app.post('/deleteAllUsers', verifySudo, user.deleteAllUsers);
     app.post('/getUser', user.getUser);

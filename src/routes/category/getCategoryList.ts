@@ -33,5 +33,5 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     const categoryList: CategoryDocument[] = await Category.find({ user: user });
-    res.status(200).send({ categoryList });
+    res.status(200).send({ count: categoryList.length, categoryList });
 };

@@ -5,16 +5,16 @@ import { ArticleDocument } from './article';
 import { UserDocument } from './user';
 const instance = db.instance;
 
-export type CommentDocument = mongoose.Document & {
+export interface IComment {
     articleId: ArticleDocument['id'] | ArticleDocument;
     content: string;
     isPinned?: boolean;
-    numLikes?: number;
     userId: UserDocument['id'] | UserDocument;
     isApproved?: boolean;
     createdOn?: Date;
-    updatedOn?: Date;
-};
+}
+
+export type CommentDocument = mongoose.Document & IComment;
 
 const commentSchema = new instance.Schema({
     articleId: {
@@ -24,11 +24,9 @@ const commentSchema = new instance.Schema({
     },
     content: { type: String, required: true, validate: /\S+/ },
     isPinned: { type: Boolean, default: false },
-    numLikes: { type: Number, default: 0 },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     isApproved: { type: Boolean, default: false },
     createdOn: { type: Date, default: Date.now },
-    updatedOn: { type: Date, default: Date.now },
 });
 
 export const Comment = instance.model<CommentDocument>('Comment', commentSchema);

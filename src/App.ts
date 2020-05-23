@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { Express, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import http from 'http';
@@ -27,6 +28,29 @@ export default class App {
         if (process.env.NODE_ENV !== 'test') {
             this.app.use(logger('dev'));
         }
+
+        /*
+        configure cross origin
+        */
+        // const handleOptionsRequest = (
+        //     req: Request,
+        //     res: Response,
+        //     next: NextFunction
+        // ): void => {
+        //     if (req.method === 'OPTIONS') {
+        //         console.log('here options');
+        //         res.header('Access-Control-Allow-Origin', '你的项目地址，用*将会带来安全问题');
+        //         res.header('Access-Control-Allow-Headers', '*');
+        //         res.header('Access-Control-Allow-Methods', '*');
+        //         res.header('Access-Control-Allow-Credentials', true);
+        //         res.header('Content-Type', 'application/json;charset=utf-8');
+        //         console.log(res.header);
+        //         res.end();
+        //     }
+        //     else next();
+        // };
+        // this.app.use(handleOptionsRequest);
+        this.app.use(cors({ credentials: true, origin: '"http://localhost:8000"' })); // Allow cross origin access
 
         /*
         configure express

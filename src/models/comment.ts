@@ -6,10 +6,10 @@ import { UserDocument } from './user';
 const instance = db.instance;
 
 export interface IComment {
-    articleId: ArticleDocument['id'] | ArticleDocument;
+    article: ArticleDocument['id'] | ArticleDocument;
     content: string;
     isPinned?: boolean;
-    userId: UserDocument['id'] | UserDocument;
+    user: UserDocument['id'] | UserDocument;
     isApproved?: boolean;
     createdOn?: Date;
 }
@@ -17,14 +17,14 @@ export interface IComment {
 export type CommentDocument = mongoose.Document & IComment;
 
 const commentSchema = new instance.Schema({
-    articleId: {
+    article: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Article',
         required: true,
     },
     content: { type: String, required: true, validate: /\S+/ },
     isPinned: { type: Boolean, default: false },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     isApproved: { type: Boolean, default: false },
     createdOn: { type: Date, default: Date.now },
 });

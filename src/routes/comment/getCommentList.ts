@@ -35,9 +35,10 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         });
     }
 
-    const article: ArticleDocument = await Article.findById(articleId)
-        .populate('comments')
-        .populate('comments.userId');
+    const article: ArticleDocument = await Article.findById(articleId).populate({
+        path: 'comments',
+        populate: { path: 'user' },
+    });
     let comments: CommentDocument[] = article.comments;
 
     if (isVisitor === true) {

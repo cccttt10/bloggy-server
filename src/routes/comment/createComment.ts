@@ -41,9 +41,9 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     const commentInfo: IComment = {
-        articleId,
+        article: articleId,
         content,
-        userId: req.verifiedUser._id,
+        user: req.verifiedUser._id,
     };
     const newComment: CommentDocument = await new Comment(commentInfo).save();
     await Article.updateOne(

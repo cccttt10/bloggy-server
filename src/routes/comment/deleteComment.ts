@@ -34,7 +34,7 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     const pendingComment: CommentDocument = await Comment.findById(commentId);
-    const articleId = pendingComment.articleId;
+    const articleId = pendingComment.article;
     const isAuthor: boolean = await Article.exists({
         author: req.verifiedUser._id,
         _id: articleId,

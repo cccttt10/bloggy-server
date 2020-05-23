@@ -13,26 +13,6 @@ export const md5 = (pwd: crypto.BinaryLike): string => {
     return md5.update(pwd).digest('hex');
 };
 
-// format as 2018-12-12 12:12:00
-export const timestampToTime = (timestamp: string | number | Date): string => {
-    const date = new Date(timestamp);
-    const Y = date.getFullYear() + '-';
-    const M =
-        (date.getMonth() + 1 < 10
-            ? '0' + (date.getMonth() + 1)
-            : date.getMonth() + 1) + '-';
-    const D =
-        date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
-    const h =
-        date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() + ':';
-    const m =
-        date.getMinutes() < 10
-            ? '0' + date.getMinutes() + ':'
-            : date.getMinutes() + ':';
-    const s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-    return Y + M + D + h + m + s;
-};
-
 export class ServerError extends Error {
     constructor({ message, statusCode }: { message: string; statusCode: number }) {
         super(message);

@@ -43,10 +43,8 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         throw new ServerError({ statusCode: 401, message: MESSAGES.UNAUTHORIZED });
     }
 
-    const approvedComment: CommentDocument = await Comment.updateOne(
-        { _id: commentId },
-        { isApproved: true }
-    );
+    await Comment.updateOne({ _id: commentId }, { isApproved: true });
+    const approvedComment: CommentDocument = await Comment.findById(commentId);
 
     res.status(200).json({ comment: approvedComment });
 };

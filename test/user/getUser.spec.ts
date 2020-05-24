@@ -60,7 +60,7 @@ describe('/getUser', () => {
         expect(res.status).to.equal(201);
 
         res = await agent.post('/getUser').send({});
-        expect(res.body.message).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
+        expect(res.text).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
         expect(res.status).to.equal(400);
     });
 
@@ -72,7 +72,7 @@ describe('/getUser', () => {
         const user = res.body.user;
 
         res = await agent.post('/getUser').send({ _id: user._id + 'no such user' });
-        expect(res.body.message).to.equal(MESSAGES.USER_ID_NOT_FOUND);
+        expect(res.text).to.equal(MESSAGES.USER_ID_NOT_FOUND);
         expect(res.status).to.equal(400);
     });
 });

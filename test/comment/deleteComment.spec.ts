@@ -142,7 +142,7 @@ describe('/deleteComment', () => {
             .set('Cookie', cookie0)
             .send({});
         expect(deleteRes.status).to.equal(400);
-        expect(deleteRes.body.message).to.equal(MESSAGES.COMMENT_ID_NOT_PROVIDED);
+        expect(deleteRes.text).to.equal(MESSAGES.COMMENT_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if comment id does not exists', async () => {
@@ -178,7 +178,7 @@ describe('/deleteComment', () => {
             .set('Cookie', cookie0)
             .send({ commentId: commentId + 'no such comment' });
         expect(deleteRes.status).to.equal(400);
-        expect(deleteRes.body.message).to.equal(MESSAGES.COMMENT_ID_NOT_FOUND);
+        expect(deleteRes.text).to.equal(MESSAGES.COMMENT_ID_NOT_FOUND);
     });
 
     it('should return 401 if the requester is not logged in', async () => {
@@ -213,7 +213,7 @@ describe('/deleteComment', () => {
             .post('/deleteComment')
             .send({ commentId: commentId });
         expect(deleteRes.status).to.equal(401);
-        expect(deleteRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(deleteRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 
     it('should return 401 if the requester is not the author of the commented article', async () => {
@@ -249,6 +249,6 @@ describe('/deleteComment', () => {
             .set('Cookie', cookie1)
             .send({ commentId: commentId });
         expect(deleteRes.status).to.equal(401);
-        expect(deleteRes.body.message).to.equal(MESSAGES.UNAUTHORIZED);
+        expect(deleteRes.text).to.equal(MESSAGES.UNAUTHORIZED);
     });
 });

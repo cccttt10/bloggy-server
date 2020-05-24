@@ -38,7 +38,7 @@ describe('/deleteAllUsers', () => {
         const res = await agent.post('/deleteAllUsers').send({
             sudoSecret: process.env.SUDO_SECRET + 'wrong',
         });
-        expect(res.body.message).to.equal(MESSAGES.SUDO_ACCESS_ONLY);
+        expect(res.text).to.equal(MESSAGES.SUDO_ACCESS_ONLY);
         expect(res.status).to.equal(401);
     });
 });

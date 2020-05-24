@@ -131,7 +131,7 @@ describe('/getArticle', () => {
     it('should return 400 if article id is not provided', async () => {
         const getRes = await agent.post('/getArticle').send();
         expect(getRes.status).to.equal(400);
-        expect(getRes.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
+        expect(getRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if article id does not exist in db', async () => {
@@ -159,12 +159,12 @@ describe('/getArticle', () => {
         expect(deleteRes.status).to.equal(204);
         const getRes1 = await agent.post('/getArticle').send({ _id: articleId });
         expect(getRes1.status).to.equal(400);
-        expect(getRes1.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
+        expect(getRes1.text).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
         const getRes2 = await agent
             .post('/getArticle')
             .send({ _id: articleId + 'no such id' });
         expect(getRes2.status).to.equal(400);
-        expect(getRes2.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
+        expect(getRes2.text).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
     });
 
     it('should return 401 if a visitor attempts to get a draft article', async () => {
@@ -186,7 +186,7 @@ describe('/getArticle', () => {
             .post('/getArticle')
             .send({ _id: articleId, isVisitor: true });
         expect(getResVisitor.status).to.equal(401);
-        expect(getResVisitor.body.message).to.equal(MESSAGES.UNAUTHORIZED);
+        expect(getResVisitor.text).to.equal(MESSAGES.UNAUTHORIZED);
 
         const getResNotVisitor = await agent
             .post('/getArticle')

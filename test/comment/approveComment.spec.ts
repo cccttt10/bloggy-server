@@ -128,7 +128,7 @@ describe('/approveComment', () => {
             .set('Cookie', cookie0)
             .send({});
         expect(approveRes.status).to.equal(400);
-        expect(approveRes.body.message).to.equal(MESSAGES.COMMENT_ID_NOT_PROVIDED);
+        expect(approveRes.text).to.equal(MESSAGES.COMMENT_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if comment id does not exist', async () => {
@@ -165,7 +165,7 @@ describe('/approveComment', () => {
             .set('Cookie', cookie0)
             .send({ commentId: commentId + 'no such comment' });
         expect(approveRes.status).to.equal(400);
-        expect(approveRes.body.message).to.equal(MESSAGES.COMMENT_ID_NOT_FOUND);
+        expect(approveRes.text).to.equal(MESSAGES.COMMENT_ID_NOT_FOUND);
     });
 
     it('should return 401 if the requester is not logged in', async () => {
@@ -201,7 +201,7 @@ describe('/approveComment', () => {
             .post('/approveComment')
             .send({ commentId: commentId });
         expect(approveRes.status).to.equal(401);
-        expect(approveRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(approveRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 
     it('should return 401 if the requester is not the author of the commented article', async () => {
@@ -238,6 +238,6 @@ describe('/approveComment', () => {
             .set('Cookie', cookie1)
             .send({ commentId: commentId });
         expect(approveRes.status).to.equal(401);
-        expect(approveRes.body.message).to.equal(MESSAGES.UNAUTHORIZED);
+        expect(approveRes.text).to.equal(MESSAGES.UNAUTHORIZED);
     });
 });

@@ -29,12 +29,10 @@ export const tryAsync = (asyncFn: AsyncFunc): WrappedFunc => {
     return (req: Request, res: Response, next: NextFunction): void => {
         asyncFn(req, res, next).catch(err => {
             if (err instanceof ServerError) {
-                res.status(err.statusCode).send({ message: err.message });
+                res.status(err.statusCode).send(err.message);
             } else {
                 consola.error(err);
-                res.status(500).send({
-                    message: MESSAGES.UNEXPECTED_ERROR,
-                });
+                res.status(500).send(MESSAGES.UNEXPECTED_ERROR);
             }
         });
     };

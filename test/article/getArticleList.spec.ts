@@ -113,7 +113,7 @@ describe('/getArticleList', () => {
     it('should return 400 if author id is not provided', async () => {
         const getRes = await agent.post('/getArticleList').send({});
         expect(getRes.status).to.equal(400);
-        expect(getRes.body.message).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
+        expect(getRes.text).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if author id does not exist', async () => {
@@ -121,6 +121,6 @@ describe('/getArticleList', () => {
             .post('/getArticleList')
             .send({ user: 'no such user' });
         expect(getRes.status).to.equal(400);
-        expect(getRes.body.message).to.equal(MESSAGES.USER_ID_NOT_FOUND);
+        expect(getRes.text).to.equal(MESSAGES.USER_ID_NOT_FOUND);
     });
 });

@@ -139,7 +139,7 @@ describe('/updateArticle', () => {
                 },
             });
         expect(updateRes0.status).to.equal(400);
-        expect(updateRes0.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
+        expect(updateRes0.text).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if article id does not exist', async () => {
@@ -184,7 +184,7 @@ describe('/updateArticle', () => {
                 },
             });
         expect(updateRes0.status).to.equal(400);
-        expect(updateRes0.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
+        expect(updateRes0.text).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
     });
 
     it('should return 401 if someone attempts to update an article without logging in', async () => {
@@ -226,6 +226,6 @@ describe('/updateArticle', () => {
             },
         });
         expect(updateRes0.status).to.equal(401);
-        expect(updateRes0.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(updateRes0.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 });

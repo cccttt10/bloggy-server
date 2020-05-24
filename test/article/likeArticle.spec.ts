@@ -118,7 +118,7 @@ describe('/likeArticle', () => {
             .set('Cookie', cookie)
             .send({ _id: articleId });
         expect(likeRes1.status).to.equal(400);
-        expect(likeRes1.body.message).to.equal(MESSAGES.ALREADY_LIKED);
+        expect(likeRes1.text).to.equal(MESSAGES.ALREADY_LIKED);
 
         const getRes = await agent.post('/getArticle').send({ _id: articleId });
         expect(getRes.status).to.equal(200);
@@ -143,7 +143,7 @@ describe('/likeArticle', () => {
             .set('Cookie', cookie)
             .send({});
         expect(likeRes.status).to.equal(400);
-        expect(likeRes.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
+        expect(likeRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if article id does not exist', async () => {
@@ -166,7 +166,7 @@ describe('/likeArticle', () => {
             .set('Cookie', cookie)
             .send({ _id: articleId + 'no such article' });
         expect(likeRes.status).to.equal(400);
-        expect(likeRes.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
+        expect(likeRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
     });
 
     it('should return 401 if a user attempts to like an article without logging in', async () => {
@@ -186,6 +186,6 @@ describe('/likeArticle', () => {
 
         const likeRes = await agent.post('/likeArticle').send({ _id: articleId });
         expect(likeRes.status).to.equal(401);
-        expect(likeRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(likeRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 });

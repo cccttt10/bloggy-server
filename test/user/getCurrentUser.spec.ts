@@ -60,6 +60,6 @@ describe('/getCurrentUser', () => {
 
         const getRes = await agent.get('/getCurrentUser');
         expect(getRes.status).to.equal(401);
-        expect(getRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(getRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 });

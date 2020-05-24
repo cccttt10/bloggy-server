@@ -89,6 +89,6 @@ describe('/createArticle', () => {
     it('should return 401 if someone attempts to create an article without logging in', async () => {
         const articleRes = await agent.post('/createArticle').send(articles[0]);
         expect(articleRes.status).to.equal(401);
-        expect(articleRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(articleRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 });

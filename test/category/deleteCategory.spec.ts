@@ -158,7 +158,7 @@ describe('/deleteCategory', () => {
             .set('Cookie', cookie)
             .send({});
         expect(deleteRes.status).to.equal(400);
-        expect(deleteRes.body.message).to.equal(MESSAGES.CATEGORY_NAME_NOT_PROVIDED);
+        expect(deleteRes.text).to.equal(MESSAGES.CATEGORY_NAME_NOT_PROVIDED);
     });
 
     it('should return 400 if the specified user does not have the specified category', async () => {
@@ -179,7 +179,7 @@ describe('/deleteCategory', () => {
             .set('Cookie', cookie)
             .send({ name: categories[0].name + 'no such cateogry' });
         expect(deleteRes.status).to.equal(400);
-        expect(deleteRes.body.message).to.equal(MESSAGES.CATEGORY_NOT_FOUND);
+        expect(deleteRes.text).to.equal(MESSAGES.CATEGORY_NOT_FOUND);
     });
 
     it('should return 401 if someone attempts to delete a category without logging in', async () => {
@@ -201,6 +201,6 @@ describe('/deleteCategory', () => {
             .post('/deleteCategory')
             .send({ name: categories[0].name });
         expect(deleteRes.status).to.equal(401);
-        expect(deleteRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(deleteRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 });

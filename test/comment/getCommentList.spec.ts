@@ -161,9 +161,7 @@ describe('/getCommentList', () => {
     it('should return 400 if article id is not provided', async () => {
         const commentListRes = await agent.post('/getCommentList').send({});
         expect(commentListRes.status).to.equal(400);
-        expect(commentListRes.body.message).to.equal(
-            MESSAGES.ARTICLE_ID_NOT_PROVIDED
-        );
+        expect(commentListRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if article id does nto exist', async () => {
@@ -171,6 +169,6 @@ describe('/getCommentList', () => {
             .post('/getCommentList')
             .send({ articleId: 'no such article' });
         expect(commentListRes.status).to.equal(400);
-        expect(commentListRes.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
+        expect(commentListRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
     });
 });

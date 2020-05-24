@@ -115,7 +115,7 @@ describe('/getCategoryList', () => {
         expect(registerRes.status).to.equal(201);
 
         const categoryRes = await agent.post('/getCategoryList').send({});
-        expect(categoryRes.body.message).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
+        expect(categoryRes.text).to.equal(MESSAGES.USER_ID_NOT_PROVIDED);
         expect(categoryRes.status).to.equal(400);
     });
 
@@ -130,7 +130,7 @@ describe('/getCategoryList', () => {
         const categoryRes = await agent
             .post('/getCategoryList')
             .send({ user: userId + 'no such user id' });
-        expect(categoryRes.body.message).to.equal(MESSAGES.USER_ID_NOT_FOUND);
+        expect(categoryRes.text).to.equal(MESSAGES.USER_ID_NOT_FOUND);
         expect(categoryRes.status).to.equal(400);
     });
 });

@@ -109,7 +109,7 @@ describe('/createComment', () => {
             .set('Cookie', cookie1)
             .send({ content: comments[0] });
         expect(commentRes.status).to.equal(400);
-        expect(commentRes.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
+        expect(commentRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_PROVIDED);
     });
 
     it('should return 400 if article id does not exists', async () => {
@@ -139,7 +139,7 @@ describe('/createComment', () => {
                 content: comments[0],
             });
         expect(commentRes.status).to.equal(400);
-        expect(commentRes.body.message).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
+        expect(commentRes.text).to.equal(MESSAGES.ARTICLE_ID_NOT_FOUND);
     });
 
     it('should return 400 if content is not provided', async () => {
@@ -166,7 +166,7 @@ describe('/createComment', () => {
             .set('Cookie', cookie1)
             .send({ articleId: articleId });
         expect(commentRes.status).to.equal(400);
-        expect(commentRes.body.message).to.equal(MESSAGES.EMPTY_COMMENT);
+        expect(commentRes.text).to.equal(MESSAGES.EMPTY_COMMENT);
     });
 
     it('should return 401 if someone attempts to comment without loggin in', async () => {
@@ -190,6 +190,6 @@ describe('/createComment', () => {
             .post('/createComment')
             .send({ articleId: articleId, content: comments[0] });
         expect(commentRes.status).to.equal(401);
-        expect(commentRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(commentRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
     });
 });

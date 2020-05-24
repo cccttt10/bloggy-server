@@ -87,7 +87,7 @@ describe('/createCategory', () => {
 
         const newCategory: ICategory = categories[0];
         const categoryRes = await agent.post('/createCategory').send(newCategory);
-        expect(categoryRes.body.message).to.equal(MESSAGES.NOT_LOGGED_IN);
+        expect(categoryRes.text).to.equal(MESSAGES.NOT_LOGGED_IN);
         expect(categoryRes.status).to.equal(401);
     });
 
@@ -113,9 +113,7 @@ describe('/createCategory', () => {
             .post('/createCategory')
             .set('Cookie', cookie)
             .send(newCategory);
-        expect(duplicateCategoryRes.body.message).to.equal(
-            MESSAGES.DUPLICATE_CATEGORY
-        );
+        expect(duplicateCategoryRes.text).to.equal(MESSAGES.DUPLICATE_CATEGORY);
         expect(duplicateCategoryRes.status).to.equal(400);
     });
 

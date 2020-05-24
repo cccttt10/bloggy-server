@@ -30,9 +30,11 @@ export const sendToken = ({
         httpOnly: true,
     };
 
-    if (process.env.NODE_ENV === 'production') {
-        cookieOptions.secure = true;
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    //     cookieOptions.secure = true;
+    // }
+    cookieOptions.secure = false;
+    cookieOptions.httpOnly = false;
 
     res.cookie('jwt', token, cookieOptions);
     res.status(statusCode).json({ user: user });

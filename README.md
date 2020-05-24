@@ -1,11 +1,11 @@
-# Blog Server
+# Bloggy Server
 
-This repo contains the server code for Blog Project. First of all, place the `.env` file  (whcih contains passwords and is not committed to version control) in the project root directory.
+This repo contains the server code for Blog Project. First of all, place the `.env` file  (which contains passwords and is not committed to version control) in the project root directory.
 
 ## Available Commands
 
 - `npm install` to install dependencies
-  
+
 - `npm run fix`: fix auto-fixable code style problems
 
 - `npm run check`: check code style against lint rules and check TypeScript compilation

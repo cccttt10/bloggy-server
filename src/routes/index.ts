@@ -27,6 +27,7 @@ const setUpRoutes = (app: Express): void => {
     app.post('/getCommentList', comment.getCommentList);
 
     app.post('/deleteAllUsers', verifySudo, user.deleteAllUsers);
+    app.get('/getCurrentUser', verifyUser, user.getCurrentUser);
     app.post('/getUser', user.getUser);
     app.post('/login', user.login);
     app.get('/logout', user.logout);

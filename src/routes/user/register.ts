@@ -8,6 +8,7 @@ import { sendToken } from './auth';
 
 export default async (req: Request, res: Response): Promise<void> => {
     const { name, password, phone, email, bio }: IUser = req.body;
+    const confirmPassword: string = req.body.confirmPassword;
 
     if (!email) {
         throw new ServerError({
@@ -30,6 +31,27 @@ export default async (req: Request, res: Response): Promise<void> => {
     if (!password) {
         throw new ServerError({
             message: MESSAGES.EMPTY_PASSWORD,
+            statusCode: 400,
+        });
+    }
+
+    if (password.length < 7) {
+        throw new ServerError({
+            message: MESSAGES.PASSWORD_TOO_SHORT,
+            statusCode: 400,
+        });
+    }
+
+    if (!confirmPassword) {
+        throw new ServerError({
+            message: MESSAGES.CONFIRM_PASSWORD_EMPTY,
+            statusCode: 400,
+        });
+    }
+
+    if (password !== confirmPassword) {
+        throw new ServerError({
+            message: MESSAGES.PASSWORDS_DO_NOT_MATCH,
             statusCode: 400,
         });
     }

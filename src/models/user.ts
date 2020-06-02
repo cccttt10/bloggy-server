@@ -13,6 +13,7 @@ export interface IUser {
     avatar?: string;
     location?: string;
     password: string;
+    confirmPassword?: string;
     createdOn?: Date;
     updatedOn?: Date;
 }

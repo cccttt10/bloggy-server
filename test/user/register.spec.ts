@@ -56,6 +56,7 @@ describe('/register', () => {
     it('should return 400 if name is not provided', async () => {
         const res = await agent.post('/register').send({
             password: users[0].password,
+            confirmPassword: users[0].confirmPassword,
             phone: users[0].phone,
             email: users[0].email,
             bio: users[0].bio,
@@ -75,10 +76,49 @@ describe('/register', () => {
         expect(res.status).to.equal(400);
     });
 
+    it('should return 400 if password is less than 7 characters', async () => {
+        const res = await agent.post('/register').send({
+            name: users[0].name,
+            phone: users[0].phone,
+            email: users[0].email,
+            bio: users[0].bio,
+            password: '123456',
+            confirmPassword: '123456',
+        });
+        expect(res.text).to.equal(MESSAGES.PASSWORD_TOO_SHORT);
+        expect(res.status).to.equal(400);
+    });
+
+    it('should return 400 if password is not confirmed', async () => {
+        const res = await agent.post('/register').send({
+            name: users[0].name,
+            phone: users[0].phone,
+            email: users[0].email,
+            bio: users[0].bio,
+            password: users[0].password,
+        });
+        expect(res.text).to.equal(MESSAGES.CONFIRM_PASSWORD_EMPTY);
+        expect(res.status).to.equal(400);
+    });
+
+    it('should return 400 if passwords do not match', async () => {
+        const res = await agent.post('/register').send({
+            name: users[0].name,
+            phone: users[0].phone,
+            email: users[0].email,
+            bio: users[0].bio,
+            password: users[0].password,
+            confirmPassword: users[0].confirmPassword + 'do not match',
+        });
+        expect(res.text).to.equal(MESSAGES.PASSWORDS_DO_NOT_MATCH);
+        expect(res.status).to.equal(400);
+    });
+
     it('should return 400 if email is not provided', async () => {
         const res = await agent.post('/register').send({
             name: users[0].name,
             password: users[0].password,
+            confirmPassword: users[0].confirmPassword,
             phone: users[0].phone,
             bio: users[0].bio,
         });
@@ -90,6 +130,7 @@ describe('/register', () => {
         const res = await agent.post('/register').send({
             name: users[0].name,
             password: users[0].password,
+            confirmPassword: users[0].confirmPassword,
             phone: users[0].phone,
             email: 'invalid',
             bio: users[0].bio,
@@ -105,6 +146,7 @@ describe('/register', () => {
         res = await agent.post('/register').send({
             name: users[0].name + 'different name ',
             password: users[0].password + 'different password',
+            confirmPassword: users[0].confirmPassword + 'different password',
             phone: users[0].phone + 'different phone',
             email: users[0].email,
             bio: users[0].bio + 'different bio',

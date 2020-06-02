@@ -26,6 +26,9 @@ export const MESSAGES = {
     USER_ID_NOT_FOUND: 'User id does not exist.',
     USER_ID_NOT_PROVIDED: 'Please provide user id.',
     WRONG_CREDENTIALS: 'Email or password is wrong.',
+    PASSWORD_TOO_SHORT: 'Password must be 7 characters or longer.',
+    CONFIRM_PASSWORD_EMPTY: 'Please confirm your password.',
+    PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
 };
 
 export const MONGODB = {

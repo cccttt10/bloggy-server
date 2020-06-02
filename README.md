@@ -2,7 +2,7 @@
 
 This repo contains the server code for Blog Project. First of all, place the `.env` file  (which contains passwords and is not committed to version control) in the project root directory.
 
-## Available Commands
+## Command Line Interfaces
 
 - `npm install` to install dependencies
 

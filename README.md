@@ -1,5 +1,7 @@
 # Bloggy Server
 
+[![Build Status](https://travis-ci.com/chuntonggao/blog-server.svg?branch=master)](https://travis-ci.com/chuntonggao/blog-server)
+
 This repo contains the server code for Blog Project. First of all, place the `.env` file  (which contains passwords and is not committed to version control) in the project root directory.
 
 ## Command Line Interfaces

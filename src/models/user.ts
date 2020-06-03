@@ -31,7 +31,11 @@ const userSchema = new instance.Schema({
         validate: [validator.isEmail, 'Please provide a valid email'],
     },
     bio: { type: String, default: '' },
-    avatar: { type: String, default: 'user' },
+    avatar: {
+        type: String,
+        default:
+            'https://75eb671495457b72631d-44e04cbda6fc1b6d4ede06ce1f27855e.ssl.cf1.rackcdn.com/MESSI-On-Field-6-4340-8x10.jpg',
+    },
     location: { type: String, default: 'Canada' },
     password: {
         type: String,

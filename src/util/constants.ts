@@ -29,6 +29,7 @@ export const MESSAGES = {
     PASSWORD_TOO_SHORT: 'Password must be 7 characters or longer.',
     CONFIRM_PASSWORD_EMPTY: 'Please confirm your password.',
     PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
+    EMAIL_CANNOT_CHANGE: 'You cannot change your email address',
 };
 
 export const MONGODB = {

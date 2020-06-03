@@ -32,6 +32,7 @@ const setUpRoutes = (app: Express): void => {
     app.post('/login', user.login);
     app.get('/logout', user.logout);
     app.post('/register', user.register);
+    app.post('/updateUser', verifyUser, user.updateUser);
 };
 
 export default setUpRoutes;

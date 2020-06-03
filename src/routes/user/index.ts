@@ -5,6 +5,7 @@ import getUser from './getUser';
 import login from './login';
 import logout from './logout';
 import register from './register';
+import updateUser from './updateUser';
 
 export default {
     deleteAllUsers: tryAsync(deleteAllUsers),
@@ -13,4 +14,5 @@ export default {
     login: tryAsync(login),
     logout: tryAsync(logout),
     register: tryAsync(register),
+    updateUser: tryAsync(updateUser),
 };

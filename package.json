@@ -56,7 +56,7 @@
         "typescript": "^3.9.2"
     },
     "license": "ISC",
-    "name": "blog-server",
+    "name": "bloggy-server",
     "scripts": {
         "build": "bash tsc-clean.sh && npm run check && npm run tsc-build",
         "check": "npm run prettier-check && npm run eslint-check && npm run tsc-check",

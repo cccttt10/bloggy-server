@@ -32,7 +32,7 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     const newArticle: ArticleDocument = await Article.findOneAndUpdate(
-        _id,
+        { _id },
         { ...updatedFields, updatedOn: Date.now() },
         {
             new: true,

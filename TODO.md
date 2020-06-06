@@ -1,12 +1,10 @@
-# TODOS
-
 ## 1
 
-Endpoint: `/queryArticleList`
+**Endpoint:** `/queryArticleList`
 
-Method: `POST`
+**Method:** `POST`
 
-Description: 
+**Description:**
 Given an author, get all articles written by that author that match `filter`. 
 If `filter` is not provided, return all articles written by that author.
 `pagination` is also optional. If `pagination` is not provided, return all matching articles.
@@ -19,7 +17,7 @@ For example, the following `pagination` object would return the 20 rows starting
 }
 ```
 
-Request body:
+**Request body:**
 
 ```typescript
 interface QueryArticleListRequestBody {
@@ -36,7 +34,7 @@ interface QueryArticleListRequestBody {
 }
 ```
 
-Response body (if request is accepted):
+**Response body (if request is valid):**
 
 ```typescript
 interface QueryArticleListResponseBody {
@@ -45,12 +43,12 @@ interface QueryArticleListResponseBody {
 }
 ```
 
-Status codes:
+**Status codes:**
 
 - 200 for success
 - 400 for bad requests
 
-Error messages:
+**Error messages:**
 
 - Should return appropriate error messages if the request is bad, e.g. article id is not provided, filter / pagination object is not valid.
 - Should test error cases and error messages.

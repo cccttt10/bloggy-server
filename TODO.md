@@ -36,7 +36,7 @@ interface QueryArticleListRequestBody {
 }
 ```
 
-Response body:
+Response body (if request is accepted):
 
 ```typescript
 interface QueryArticleListResponseBody {
@@ -44,5 +44,15 @@ interface QueryArticleListResponseBody {
     articleList: IArticle[];
 }
 ```
+
+Status codes:
+
+- 200 for success
+- 400 for bad requests
+
+Error messages:
+
+- Should return appropriate error messages if the request is bad, e.g. article id is not provided, filter / pagination object is not valid.
+- Should test error cases and error messages.
 
 Implement API in `src/routes/article/queryArticleList.ts` and write unit tests in `test/article/queryArticleList.spec.ts`. 

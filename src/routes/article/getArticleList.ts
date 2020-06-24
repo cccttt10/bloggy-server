@@ -35,7 +35,9 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         });
     }
 
-    let articles: ArticleDocument[] = await Article.find({ author: user });
+    let articles: ArticleDocument[] = await Article.find({ author: user })
+        .populate('comments')
+        .populate('categories');
     if (isVisitor === true) {
         // filter out draft articles
         articles = articles.filter((article: ArticleDocument): boolean => {

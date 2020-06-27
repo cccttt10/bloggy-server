@@ -32,7 +32,12 @@ export default class App {
         /*
         configure cross origin
         */
-        this.app.use(cors({ credentials: true, origin: 'http://localhost:8000' }));
+        this.app.use(
+            cors({
+                credentials: true,
+                origin: ['http://localhost:8000', 'http://localhost:2000'],
+            })
+        );
 
         /*
         configure express

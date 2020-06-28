@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { AugmentedRequest } from 'global';
 
-import { Article, ArticleDocument } from '../../models/article';
+import { Article, ArticleDocument, IArticle } from '../../models/article';
 import { CommentDocument } from '../../models/comment';
 import { User } from '../../models/user';
 import { MESSAGES } from '../../util/constants';
@@ -35,7 +35,25 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         });
     }
 
-    let articles: ArticleDocument[] = await Article.find({ author: user })
+    // pagination
+    const page = req.body.pagination.page * 1 || 1; // convert string to number
+    const limit = req.body.pagination.limit * 1 || 5;
+    const skip = (page - 1) * limit;
+
+    // filter
+    const filter = req.body.filter;
+    const isAboutPage: IArticle['isAboutPage'] = filter.isAboutPage;
+    const isDraft: IArticle['isDraft'] = filter.isDraft;
+    const keyword: string = filter.keyword;
+
+    let articles: ArticleDocument[] = await Article.find({
+        author: user,
+        isAboutPage,
+        isDraft: isDraft,
+        $text: { $search: `\"${keyword}\"` },
+    })
+        .skip(skip)
+        .limit(limit)
         .populate('comments')
         .populate('categories');
     if (isVisitor === true) {

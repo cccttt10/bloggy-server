@@ -5,15 +5,15 @@
 **Method:** `POST`
 
 **Description:**
-Given an author, get all articles written by that author that match `filter`. 
+Given an author, get all articles written by that author that match `filter`.
 If `filter` is not provided, return all articles written by that author.
 `pagination` is also optional. If `pagination` is not provided, return all matching articles.
-`pagination` works very similarly to SQL pagination. 
-For example, the following `pagination` object would return the 20 rows starting with the 100th row.
+For example, the following `pagination` object would return the 20 rows on page 2. There are 20 rows on page 1, so the following `pagination` object would return row 21 to row 40 (row 1 is the first row).
+
 ```typescript
 {
     limit: 20
-    offset: 100
+    page: 2
 }
 ```
 
@@ -21,15 +21,15 @@ For example, the following `pagination` object would return the 20 rows starting
 
 ```typescript
 interface QueryArticleListRequestBody {
-    _id: IUser['_id']; // author id 
+    _id: IUser['_id']; // author id
     filter?: {
         isAboutPage: IArticle['isAboutPage'];
-        isDraft?: IArticle['isDraft']; 
+        isDraft?: IArticle['isDraft'];
         keyword?: IArticle['title'] | IArticle['description']; // search in article title and description for the keyword
     },
     pagination?: {
         limit: number;
-        offset: number;
+        page: number;
     }
 }
 ```
@@ -53,4 +53,4 @@ interface QueryArticleListResponseBody {
 - Should return appropriate error messages if the request is bad, e.g. article id is not provided, filter / pagination object is not valid.
 - Should test error cases and error messages.
 
-Implement API in `src/routes/article/queryArticleList.ts` and write unit tests in `test/article/queryArticleList.spec.ts`. 
+Implement API in `src/routes/article/queryArticleList.ts` and write unit tests in `test/article/queryArticleList.spec.ts`.

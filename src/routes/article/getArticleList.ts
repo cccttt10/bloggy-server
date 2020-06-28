@@ -35,27 +35,41 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         });
     }
 
+    let articles: ArticleDocument[];
+
     // pagination
-    const page = req.body.pagination.page * 1 || 1; // convert string to number
-    const limit = req.body.pagination.limit * 1 || 5;
+    const page = req.body.pagination?.page * 1 || 1; // convert string to number
+    const limit = req.body.pagination?.limit * 1 || 5;
     const skip = (page - 1) * limit;
 
     // filter
     const filter = req.body.filter;
-    const isAboutPage: IArticle['isAboutPage'] = filter.isAboutPage;
-    const isDraft: IArticle['isDraft'] = filter.isDraft;
-    const keyword: string = filter.keyword;
+    if (filter) {
+        const isAboutPage: IArticle['isAboutPage'] = filter.isAboutPage;
+        const isDraft: IArticle['isDraft'] = filter.isDraft;
+        const keyword: string = filter.keyword;
+        articles = await Article.find({
+            author: user,
+            isAboutPage,
+            isDraft: isDraft,
+            $text: { $search: `\"${keyword}\"` },
+        })
+            .skip(skip)
+            .limit(limit)
+            .populate('comments')
+            .populate('categories');
+    }
+    // no filter
+    else {
+        articles = await Article.find({
+            author: user,
+        })
+            .skip(skip)
+            .limit(limit)
+            .populate('comments')
+            .populate('categories');
+    }
 
-    let articles: ArticleDocument[] = await Article.find({
-        author: user,
-        isAboutPage,
-        isDraft: isDraft,
-        $text: { $search: `\"${keyword}\"` },
-    })
-        .skip(skip)
-        .limit(limit)
-        .populate('comments')
-        .populate('categories');
     if (isVisitor === true) {
         // filter out draft articles
         articles = articles.filter((article: ArticleDocument): boolean => {

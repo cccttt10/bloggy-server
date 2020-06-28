@@ -4,6 +4,13 @@
 
 This repo contains the server code for Blog Project. First of all, place the `.env` file  (which contains passwords and is not committed to version control) in the project root directory.
 
+-   [Project Overview](https://github.com/chuntonggao/bloggy.git)
+-   [Front-end repo for reader view](https://github.com/chuntonggao/bloggy-reader.git)
+-   [Front-end repo for publisher view](https://github.com/chuntonggao/bloggy-publisher.git)
+
+
+
+
 ## Command Line Interfaces
 
 - `npm install` to install dependencies

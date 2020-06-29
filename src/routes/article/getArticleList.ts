@@ -1,7 +1,8 @@
 import { Response } from 'express';
 import { AugmentedRequest } from 'global';
+import { FilterQuery } from 'mongoose';
 
-import { Article, ArticleDocument, IArticle } from '../../models/article';
+import { Article, ArticleDocument } from '../../models/article';
 import { CommentDocument } from '../../models/comment';
 import { User } from '../../models/user';
 import { MESSAGES } from '../../util/constants';
@@ -45,15 +46,21 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     // filter
     const filter = req.body.filter;
     if (filter) {
-        const isAboutPage: IArticle['isAboutPage'] = filter.isAboutPage;
-        const isDraft: IArticle['isDraft'] = filter.isDraft;
-        const keyword: string = filter.keyword;
-        articles = await Article.find({
-            author: user,
-            isAboutPage,
-            isDraft: isDraft,
-            $text: { $search: `\"${keyword}\"` },
-        })
+        let queryObject: FilterQuery<ArticleDocument>;
+        queryObject.author = user;
+        if (typeof filter.isAboutPage === 'boolean') {
+            queryObject.isAboutPage = filter.isAboutPage;
+        }
+        if (typeof filter.isDraft === 'boolean') {
+            queryObject.isDraft = filter.isDraft;
+        }
+        if (typeof filter.keyword === 'string') {
+            queryObject.$text = { $search: `\"${filter.keyword}\"` };
+        }
+        if (typeof filter.categoryId === 'string') {
+            queryObject.categories = filter.categoryId;
+        }
+        articles = await Article.find(queryObject)
             .skip(skip)
             .limit(limit)
             .populate('comments')

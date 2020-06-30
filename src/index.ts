@@ -5,4 +5,4 @@ require('dotenv').config();
 
 import App from './App';
 
-new App().start();
+new App(process.env.PORT).start();

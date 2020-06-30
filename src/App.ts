@@ -35,7 +35,12 @@ export default class App {
         this.app.use(
             cors({
                 credentials: true,
-                origin: ['http://localhost:8000', 'http://localhost:2000'],
+                origin: [
+                    'http://localhost:8000',
+                    'http://localhost:2000',
+                    'https://bloggy-reader.netlify.app',
+                    'https://bloggy-publisher.netlify.app',
+                ],
             })
         );
 

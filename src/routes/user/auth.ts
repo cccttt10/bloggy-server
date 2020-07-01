@@ -15,16 +15,17 @@ const createToken = (id: string): string => {
 };
 
 export const sendToken = ({
+    origin,
     user,
     statusCode,
     res,
 }: {
+    origin: string;
     user: UserDocument;
     statusCode: number;
     res: Response;
 }): void => {
     const token = createToken(user._id);
-
     let cookieOptions: CookieOptions;
     if (process.env.NODE_ENV === 'development') {
         cookieOptions = {
@@ -33,11 +34,20 @@ export const sendToken = ({
             secure: false,
         };
     } else if (process.env.NODE_ENV === 'production') {
+        let domain = '';
+        if (
+            origin === 'https://bloggy-reader.netlify.app' ||
+            origin === 'https://bloggy-publisher.netlify.app'
+        ) {
+            domain = origin;
+        }
         cookieOptions = {
             expires: new Date(Date.now() + ONE_DAY),
             httpOnly: false,
             secure: true,
             sameSite: 'none',
+            domain: domain,
+            path: '/',
         };
     }
 

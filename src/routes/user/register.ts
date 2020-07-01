@@ -76,6 +76,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     await new User(userInfo).save();
     const newUser: UserDocument = await User.findOne({ email: email });
     sendToken({
+        origin: req.get('Origin'),
         user: newUser,
         statusCode: 201,
         res: res,

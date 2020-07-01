@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { CookieOptions, NextFunction, Request, Response } from 'express';
 import { AugmentedRequest } from 'global';
 import jwt, { Secret, VerifyOptions } from 'jsonwebtoken';
 import { promisify } from 'util';
@@ -25,16 +25,21 @@ export const sendToken = ({
 }): void => {
     const token = createToken(user._id);
 
-    const cookieOptions: { expires: Date; httpOnly: boolean; secure?: boolean } = {
-        expires: new Date(Date.now() + ONE_DAY),
-        httpOnly: true,
-    };
-
-    // if (process.env.NODE_ENV === 'production') {
-    //     cookieOptions.secure = true;
-    // }
-    cookieOptions.secure = false;
-    cookieOptions.httpOnly = false;
+    let cookieOptions: CookieOptions;
+    if (process.env.NODE_ENV === 'development') {
+        cookieOptions = {
+            expires: new Date(Date.now() + ONE_DAY),
+            httpOnly: false,
+            secure: false,
+        };
+    } else if (process.env.NODE_ENV === 'production') {
+        cookieOptions = {
+            expires: new Date(Date.now() + ONE_DAY),
+            httpOnly: false,
+            secure: true,
+            sameSite: 'none',
+        };
+    }
 
     res.cookie('jwt', token, cookieOptions);
     res.status(statusCode).json({ user: user });

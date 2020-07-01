@@ -3,6 +3,8 @@ import { AugmentedRequest } from 'global';
 import { ObjectId } from 'mongodb';
 
 import { Article, ArticleDocument, IArticle } from '../../models/article';
+import { MESSAGES } from '../../util/constants';
+import { ServerError } from '../../util/util';
 
 export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     const title: string = req.body.title ? req.body.title : 'Untitled Blog';
@@ -19,7 +21,17 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     const isDraft: boolean =
         typeof req.body.isDraft === 'boolean' ? req.body.isDraft : true;
     const isAboutPage: boolean =
-        typeof req.body.isAboutPage === 'boolean' ? req.body.isDraft : true;
+        typeof req.body.isAboutPage === 'boolean' ? req.body.isAboutPage : false;
+    const aboutPageExists: boolean = await Article.exists({
+        author: author,
+        isAboutPage: true,
+    });
+    if (aboutPageExists === true && isAboutPage === true) {
+        throw new ServerError({
+            statusCode: 400,
+            message: MESSAGES.ABOUT_PAGE_ALREADY_EXISTS,
+        });
+    }
     const categories: ObjectId[] = req.body.categories ? req.body.categories : [];
     const articleInfo: IArticle = {
         title,

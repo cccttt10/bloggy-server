@@ -32,7 +32,6 @@ module.exports = {
         'no-useless-escape': 'off',
         'no-var': 'error',
         'require-await': 'error',
-        "require-sort/require-sort": "error",
         'simple-import-sort/sort': 'error'
     }
 };

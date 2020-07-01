@@ -4,6 +4,8 @@ load environment variables
 require('dotenv').config();
 
 export const MESSAGES = {
+    ABOUT_PAGE_ALREADY_EXISTS:
+        'There is already an about page, you can only have one.',
     ALREADY_LIKED: 'You already liked this article.',
     ARTICLE_ID_NOT_FOUND: 'Article id does not exist.',
     ARTICLE_ID_NOT_PROVIDED: 'Please provide article id.',
@@ -11,8 +13,10 @@ export const MESSAGES = {
     CATEGORY_NOT_FOUND: 'This user does not have this category.',
     COMMENT_ID_NOT_FOUND: 'Comment id does not exist',
     COMMENT_ID_NOT_PROVIDED: 'Please provide comment id',
+    CONFIRM_PASSWORD_EMPTY: 'Please confirm your password.',
     DUPLICATE_CATEGORY: 'This user already has this category.',
     DUPLICATE_EMAIL: 'User already exists. Email is already used.',
+    EMAIL_CANNOT_CHANGE: 'You cannot change your email address',
     EMPTY_COMMENT: 'Comment cannot be empty.',
     EMPTY_EMAIL: 'Email cannot be empty.',
     EMPTY_NAME: 'Name cannot be empty',
@@ -20,16 +24,14 @@ export const MESSAGES = {
     INVALID_EMAIL: 'Email has invalid format',
     NO_USER_FOR_THIS_TOKEN: 'The user corresponding to this token no longer exists.',
     NOT_LOGGED_IN: 'You are not logged in. Please log in to complete this action.',
+    PASSWORD_TOO_SHORT: 'Password must be 7 characters or longer.',
+    PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
     SUDO_ACCESS_ONLY: 'You need sudo privilege to access this route.',
     UNAUTHORIZED: 'You are not authorized to complete this action.',
     UNEXPECTED_ERROR: 'Unexpected error',
     USER_ID_NOT_FOUND: 'User id does not exist.',
     USER_ID_NOT_PROVIDED: 'Please provide user id.',
     WRONG_CREDENTIALS: 'Email or password is wrong.',
-    PASSWORD_TOO_SHORT: 'Password must be 7 characters or longer.',
-    CONFIRM_PASSWORD_EMPTY: 'Please confirm your password.',
-    PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
-    EMAIL_CANNOT_CHANGE: 'You cannot change your email address',
 };
 
 export const MONGODB = {

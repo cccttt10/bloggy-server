@@ -41,3 +41,7 @@ export const MONGODB = {
 export const TEST_SERVER_URL = 'http://localhost:3300';
 
 export const DEFAULT_PORT = 3300;
+
+// https://s1.ax1x.com/2020/05/15/YDzq7d.jpg
+export const DEFAULT_IMG_URL =
+    'https://t.resfu.com/media/img_news/agencia-efe_multimedia_3246119.multimedia.photos.12821826.file.jpg?size=776x&q=60';

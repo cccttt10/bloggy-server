@@ -3,7 +3,7 @@ import { AugmentedRequest } from 'global';
 import { ObjectId } from 'mongodb';
 
 import { Article, ArticleDocument, IArticle } from '../../models/article';
-import { MESSAGES } from '../../util/constants';
+import { DEFAULT_IMG_URL, MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 export default async (req: AugmentedRequest, res: Response): Promise<void> => {
@@ -17,7 +17,10 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         req.body.content && typeof req.body.content === 'string'
             ? req.body.content.length
             : 0;
-    const imgUrl: string = req.body.imgUrl ? req.body.imgUrl : '';
+    const imgUrl: string =
+        typeof req.body.imgUrl === 'string' && req.body.imgUrl !== ''
+            ? req.body.imgUrl
+            : DEFAULT_IMG_URL;
     const isDraft: boolean =
         typeof req.body.isDraft === 'boolean' ? req.body.isDraft : true;
     const isAboutPage: boolean =

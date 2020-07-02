@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import db from '../mongodb.config';
 const instance = db.instance;
 
+import { DEFAULT_IMG_URL } from '../util/constants';
 import { CategoryDocument } from './category';
 import { CommentDocument } from './comment';
 import { UserDocument } from './user';
@@ -36,7 +37,7 @@ const articleSchema = new instance.Schema({
     description: { type: String, default: 'This is a blog post.' },
     content: { type: String, default: 'No content yet.' },
     wordCount: { type: Number, default: 0 },
-    imgUrl: { type: String, default: 'https://s1.ax1x.com/2020/05/15/YDzq7d.jpg' },
+    imgUrl: { type: String, default: DEFAULT_IMG_URL },
     isDraft: { type: Boolean, default: true },
     comments: [{ type: instance.Schema.Types.ObjectId, ref: 'Comment' }],
     categories: [{ type: instance.Schema.Types.ObjectId, ref: 'Category' }],

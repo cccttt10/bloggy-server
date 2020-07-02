@@ -6,7 +6,7 @@ import { MESSAGES } from '../../util/constants';
 import { ServerError } from '../../util/util';
 
 function queryHelper(req: AugmentedRequest) {
-    const { _id } = req.body.id;
+    const _id = req.body.id;
     const filter = req.body.filter;
     const pagination = req.body.pagination;
 
@@ -45,8 +45,8 @@ function queryHelper(req: AugmentedRequest) {
     }
 
     if (pagination) {
-        query.push({ $skip: pagination.limit });
-        query.push({ $skip: pagination.offset });
+        query.push({ $skip: pagination.limit * (pagination.page - 1) });
+        query.push({ $limit: pagination.limit });
     }
 
     return query;

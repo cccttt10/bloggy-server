@@ -14,6 +14,7 @@ const setUpRoutes = (app: Express): void => {
     app.post('/getArticleList', article.getArticleList);
     app.post('/likeArticle', verifyUser, article.likeArticle);
     app.post('/updateArticle', verifyUser, article.updateArticle);
+    app.post('/queryArticleList', article.queryArticleList);
 
     app.post('/createCategory', verifyUser, category.createCategory);
     app.post('/deleteAllCategories', verifySudo, category.deleteAllCategories);

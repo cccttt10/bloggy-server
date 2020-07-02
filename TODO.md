@@ -12,8 +12,8 @@ For example, the following `pagination` object would return the 20 rows on page 
 
 ```typescript
 {
-    limit: 20
-    page: 2
+    limit: 20;
+    page: 2;
 }
 ```
 
@@ -26,11 +26,11 @@ interface QueryArticleListRequestBody {
         isAboutPage: IArticle['isAboutPage'];
         isDraft?: IArticle['isDraft'];
         keyword?: IArticle['title'] | IArticle['description']; // search in article title and description for the keyword
-    },
+    };
     pagination?: {
         limit: number;
         page: number;
-    }
+    };
 }
 ```
 
@@ -45,12 +45,12 @@ interface QueryArticleListResponseBody {
 
 **Status codes:**
 
-- 200 for success
-- 400 for bad requests
+-   200 for success
+-   400 for bad requests
 
 **Error messages:**
 
-- Should return appropriate error messages if the request is bad, e.g. article id is not provided, filter / pagination object is not valid.
-- Should test error cases and error messages.
+-   Should return appropriate error messages if the request is bad, e.g. article id is not provided, filter / pagination object is not valid.
+-   Should test error cases and error messages.
 
 Implement API in `src/routes/article/queryArticleList.ts` and write unit tests in `test/article/queryArticleList.spec.ts`.

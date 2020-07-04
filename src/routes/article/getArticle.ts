@@ -34,7 +34,7 @@ export default async (req: Request, res: Response): Promise<void> => {
     }
 
     const article: ArticleDocument = await Article.findById(_id).populate(
-        'comments categories'
+        'comments categories author'
     );
 
     if (isVisitor === true) {

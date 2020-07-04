@@ -44,6 +44,8 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         { $inc: { 'meta.numLikes': 1 }, $push: { likedBy: req.verifiedUser._id } }
     );
 
-    const updatedArticle: ArticleDocument = await Article.findById(_id);
+    const updatedArticle: ArticleDocument = await Article.findById(_id).populate(
+        'comments categories author'
+    );
     res.status(200).json({ article: updatedArticle });
 };

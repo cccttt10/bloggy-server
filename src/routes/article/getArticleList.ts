@@ -41,7 +41,7 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     // filter
     const filter = req.body.filter;
     if (filter) {
-        let queryObject: FilterQuery<ArticleDocument>;
+        const queryObject: FilterQuery<ArticleDocument> = {};
         queryObject.author = user;
         if (typeof filter.isAboutPage === 'boolean') {
             queryObject.isAboutPage = filter.isAboutPage;

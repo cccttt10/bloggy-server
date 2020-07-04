@@ -33,9 +33,10 @@ export default async (req: Request, res: Response): Promise<void> => {
         });
     }
 
-    const article: ArticleDocument = await Article.findById(_id)
-        .populate('comments')
-        .populate('categories');
+    const article: ArticleDocument = await Article.findById(_id).populate(
+        'comments categories'
+    );
+
     if (isVisitor === true) {
         if (article.isDraft === true) {
             throw new ServerError({

@@ -48,8 +48,9 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         categories,
     };
     const newArticle: ArticleDocument = await new Article(articleInfo).save();
-    const savedArticle: ArticleDocument = await Article.findById(newArticle._id)
-        .populate('comments')
-        .populate('categories');
+    const savedArticle: ArticleDocument = await Article.findById(
+        newArticle._id
+    ).populate('comments categories');
+
     res.status(201).json({ article: savedArticle });
 };

@@ -55,19 +55,12 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
         if (typeof filter.categoryId === 'string') {
             queryObject.categories = filter.categoryId;
         }
-        articles = await Article.find(queryObject)
-
-            .populate('comments')
-            .populate('categories');
-    }
-    // no filter
-    else {
+        articles = await Article.find(queryObject).populate('comments categories');
+    } else {
+        // no filter
         articles = await Article.find({
             author: user,
-        })
-
-            .populate('comments')
-            .populate('categories');
+        }).populate('comments categories');
     }
 
     if (isVisitor === true) {
@@ -88,10 +81,12 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     const totalCount = articles.length;
 
     // pagination
-    const page = req.body.pagination?.page * 1 || 0; // convert string to number
-    const limit = req.body.pagination?.limit * 1 || 5;
-    const skip = page * limit;
-    articles = articles.slice(skip, skip + limit);
+    if (req.body.pagination) {
+        const page = req.body.pagination.page * 1 || 0; // convert string to number
+        const limit = req.body.pagination.limit * 1 || 5;
+        const skip = page * limit;
+        articles = articles.slice(skip, skip + limit);
+    }
 
     res.status(200).json({ count: totalCount, articleList: articles });
 };

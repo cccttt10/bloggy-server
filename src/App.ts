@@ -40,6 +40,8 @@ export default class App {
                     'http://localhost:2000',
                     'https://bloggy-reader.netlify.app',
                     'https://bloggy-publisher.netlify.app',
+                    'https://publisher.bloggy.ca',
+                    'https://reader.bloggy.ca',
                 ],
             })
         );

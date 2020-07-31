@@ -29,6 +29,9 @@ export default class App {
             this.app.use(logger('dev'));
         }
 
+        this.app.use('/publisher', express.static('publisher'));
+        this.app.use('/reader', express.static('reader'));
+
         /*
         configure cross origin
         */

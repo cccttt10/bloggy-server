@@ -30,7 +30,9 @@ export default class App {
         }
 
         this.app.use('/publisher', express.static('publisher'));
+        this.app.use('/', express.static('publisher'));
         this.app.use('/reader', express.static('reader'));
+        this.app.use('/', express.static('reader'));
 
         /*
         configure cross origin
@@ -95,6 +97,7 @@ export default class App {
             next: NextFunction
         ) {
             stdout.error('error caught in app.ts');
+            console.log(err);
             stdout.log(err.toString());
 
             // set locals

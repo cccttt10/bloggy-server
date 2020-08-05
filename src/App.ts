@@ -37,11 +37,21 @@ export default class App {
         this.app.use('/publisher', express.static('publisher'));
         this.app.use('/', express.static('publisher'));
         this.app.use('/user/*', express.static('publisher'));
-        this.app.get('/*', function (req, res) {
+        this.app.get('/', function (req, res) {
             res.sendFile('index.html', { root: 'reader' });
         });
-
-        this.app.use('/', express.static('reader'));
+        this.app.get('/user/*', function (req, res) {
+            res.sendFile('index.html', { root: 'reader' });
+        });
+        this.app.get('/account/*', function (req, res) {
+            res.sendFile('index.html', { root: 'reader' });
+        });
+        this.app.get('/articles/*', function (req, res) {
+            res.sendFile('index.html', { root: 'reader' });
+        });
+        this.app.get('/categories/*', function (req, res) {
+            res.sendFile('index.html', { root: 'reader' });
+        });
 
         /*
         configure cross origin

@@ -31,8 +31,9 @@ export default class App {
 
         this.app.use('/publisher', express.static('publisher'));
         this.app.use('/', express.static('publisher'));
-        this.app.use('/reader', express.static('reader'));
+        this.app.use('/user/*', express.static('publisher'));
 
+        this.app.use('/reader', express.static('reader'));
         this.app.get('/reader/*', function (req, res) {
             res.sendFile('index.html', { root: 'reader' });
         });

@@ -44,9 +44,7 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     await Comment.updateOne({ _id: commentId }, { isApproved: true });
-    const approvedComment: CommentDocument = await Comment.findById(
-        commentId
-    ).populate('user');
+    const approvedComment: CommentDocument = await Comment.findById(commentId);
 
     res.status(200).json({ comment: approvedComment });
 };

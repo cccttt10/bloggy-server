@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 
 import db from '../mongodb.config';
+import { DEFAULT_IMG_URL } from '../util/constants';
+
 const instance = db.instance;
 
 export interface IUser {
@@ -23,7 +25,7 @@ export type UserDocument = mongoose.Document & IUser;
 const userSchema = new instance.Schema({
     name: { type: String, required: [true, 'User must have a name. '] },
     phone: { type: String, default: '' },
-    imgUrl: { type: String, default: '' },
+    imgUrl: { type: String, default: DEFAULT_IMG_URL },
     email: {
         type: String,
         unique: true,

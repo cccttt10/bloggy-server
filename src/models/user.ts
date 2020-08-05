@@ -33,8 +33,7 @@ const userSchema = new instance.Schema({
     bio: { type: String, default: '' },
     avatar: {
         type: String,
-        default:
-            'https://75eb671495457b72631d-44e04cbda6fc1b6d4ede06ce1f27855e.ssl.cf1.rackcdn.com/MESSI-On-Field-6-4340-8x10.jpg',
+        default: 'https://s1.ax1x.com/2020/08/05/ayvYuj.png',
     },
     location: { type: String, default: 'Canada' },
     password: {

@@ -48,7 +48,7 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     const newComment: CommentDocument = await new Comment(commentInfo).save();
     await Article.updateOne(
         { _id: articleId },
-        { $push: { comments: newComment._id } }
+        { $push: { comments: newComment._id }, $inc: { 'meta.numComments': 1 } }
     );
 
     res.status(201).json({ comment: newComment });

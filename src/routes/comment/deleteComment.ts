@@ -44,5 +44,10 @@ export default async (req: AugmentedRequest, res: Response): Promise<void> => {
     }
 
     await Comment.deleteOne({ _id: commentId });
+    await Article.updateOne(
+        { _id: articleId },
+        { $inc: { 'meta.numComments': -1 } }
+    );
+
     res.sendStatus(204);
 };

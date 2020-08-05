@@ -110,23 +110,20 @@ export default class App {
         /*
         error handler
         */
-        this.app.use(function (
-            err: Error & { status?: number },
-            req: Request,
-            res: Response,
-            next: NextFunction
-        ) {
-            stdout.error('error caught in app.ts');
-            console.log(err);
-            stdout.log(err.toString());
-
-            // set locals
-            // provide error only in development
-            res.locals.message = err.message;
-            res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-            res.status(err.status || 500).send('Unexpected server error.');
-        });
+        if (process.env.NODE_ENV === 'production') {
+            this.app.use(express.static('publisher'));
+        } else {
+            this.app.use(function (
+                err: Error & { status?: number },
+                req: Request,
+                res: Response,
+                next: NextFunction
+            ) {
+                stdout.error('error caught in app.ts');
+                stdout.log(err.toString());
+                res.status(err.status || 500).send('Unexpected server error.');
+            });
+        }
 
         this.server = this.app.listen(this.port, () => {
             stdout.success(`App running on port ${this.port}...`);
